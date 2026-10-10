@@ -3,12 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OliGlobal - B2B Wholesale Marketplace & Secure Supplier Hub</title>
-    <!-- Tailwind CSS -->
+    <title>OliGlobal - Private B2B Wholesale Marketplace & Secure Supplier Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Font Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
@@ -42,127 +39,158 @@
                 </div>
                 <div>
                     <span class="text-xl font-bold tracking-tight text-white">OliGlobal</span>
-                    <span class="block text-[10px] text-indigo-300 uppercase tracking-widest">B2B Wholesale Hub</span>
+                    <span class="block text-[10px] text-indigo-300 uppercase tracking-widest" data-en="Private B2B Wholesale Hub" data-bn="প্রাইভেট বিটুবি পাইকারি হাব" data-zh="私密B2B批发中心">Private B2B Wholesale Hub</span>
                 </div>
             </div>
             
-            <!-- Global Navigation & Role Switcher -->
-            <div class="flex items-center space-x-2 bg-slate-800 p-1 rounded-xl border border-slate-700 text-xs sm:text-sm">
-                <button onclick="setRole('retailer')" id="nav-btn-retailer" class="px-3 py-1.5 rounded-lg font-medium transition-colors bg-indigo-600 text-white">
-                    <i class="fa-solid fa-store mr-1.5"></i> Retailer Portal
+            <div class="flex items-center space-x-3">
+                <!-- Language Switcher Button -->
+                <button onclick="toggleLanguage()" id="lang-switch-btn" class="bg-slate-800 hover:bg-slate-700 text-white px-3.5 py-2.5 rounded-xl border border-slate-700 flex items-center space-x-2 transition-colors text-xs font-semibold focus:outline-none shadow-sm">
+                    <i class="fa-solid fa-globe text-indigo-400"></i>
+                    <span id="lang-label">English</span>
                 </button>
-                <button onclick="openSupplierPortalModal()" id="nav-btn-supplier" class="px-3 py-1.5 rounded-lg font-medium transition-colors text-slate-300 hover:text-white">
-                    <i class="fa-solid fa-industry mr-1.5"></i> Supplier Portal Login
-                </button>
-                <button onclick="openAdminLoginModal()" id="nav-btn-admin" class="px-3 py-1.5 rounded-lg font-medium transition-colors text-slate-300 hover:text-white">
-                    <i class="fa-solid fa-shield-halved mr-1.5"></i> Admin Control
-                </button>
+
+                <!-- Sign In / Log In Hamburger Dropdown Menu -->
+                <div class="relative">
+                    <button onclick="toggleNavDropdown()" id="nav-menu-btn" class="bg-slate-800 hover:bg-slate-700 text-white px-3.5 py-2.5 rounded-xl border border-slate-700 flex items-center space-x-2.5 transition-colors focus:outline-none shadow-sm">
+                        <i class="fa-solid fa-bars text-lg"></i>
+                        <span class="text-xs font-semibold inline" id="current-role-label" data-en="Sign In / Log In" data-bn="সাইন ইন / লগ ইন" data-zh="登录 / 注册">Sign In / Log In</span>
+                        <i class="fa-solid fa-chevron-down text-xs text-slate-400"></i>
+                    </button>
+
+                    <!-- Dropdown Menu Box -->
+                    <div id="nav-dropdown-menu" class="hidden absolute right-0 mt-2 w-60 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl py-2 z-50 text-sm">
+                        <div class="px-4 py-2 border-b border-slate-800 text-[10px] text-slate-400 uppercase tracking-wider font-semibold" data-en="Platform Navigation" data-bn="প্লাটফর্ম নেভিগেশন" data-zh="平台导航">
+                            Platform Navigation
+                        </div>
+                        <button onclick="openBuyerLoginModal(); closeNavDropdown();" class="w-full text-left px-4 py-3 hover:bg-indigo-600/20 hover:text-indigo-400 text-slate-200 flex items-center space-x-3 transition-colors">
+                            <i class="fa-solid fa-store w-5 text-indigo-400"></i>
+                            <div>
+                                <span class="block font-medium" data-en="Buyer Portal Login" data-bn="বায়ার পোর্টাল লগইন" data-zh="买家门户登录">Buyer Portal Login</span>
+                                <span class="text-[10px] text-slate-400 block" data-en="Retailers & Wholesale Buyers" data-bn="রিটেইলার এবং পাইকারি ক্রেতা" data-zh="零售商与批发买家">Retailers & Wholesale Buyers</span>
+                            </div>
+                        </button>
+                        <button onclick="openSupplierPortalModal(); closeNavDropdown();" class="w-full text-left px-4 py-3 hover:bg-indigo-600/20 hover:text-indigo-400 text-slate-200 flex items-center space-x-3 transition-colors border-t border-slate-800/60">
+                            <i class="fa-solid fa-industry w-5 text-indigo-400"></i>
+                            <div>
+                                <span class="block font-medium" data-en="Supplier Portal Login" data-bn="সাপ্লায়ার পোর্টাল লগইন" data-zh="供应商门户登录">Supplier Portal Login</span>
+                                <span class="text-[10px] text-slate-400 block" data-en="Verified Manufacturers & Importers" data-bn="যাচাইকৃত প্রস্তুতকারক ও আমদানিকারক" data-zh="认证制造商与进口商">Verified Manufacturers & Importers</span>
+                            </div>
+                        </button>
+                        <button onclick="openAdminLoginModal(); closeNavDropdown();" class="w-full text-left px-4 py-3 hover:bg-indigo-600/20 hover:text-indigo-400 text-slate-200 flex items-center space-x-3 transition-colors border-t border-slate-800/60">
+                            <i class="fa-solid fa-shield-halved w-5 text-emerald-400"></i>
+                            <div>
+                                <span class="block font-medium" data-en="Admin Control" data-bn="অ্যাডমিন কন্ট্রোল" data-zh="管理控制">Admin Control</span>
+                                <span class="text-[10px] text-slate-400 block" data-en="Master Platform Operations" data-bn="মাস্টার প্ল্যাটফর্ম অপারেশন" data-zh="主平台运营">Master Platform Operations</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
 
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
-
         <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col space-y-2"></div>
 
-        <!-- VIEW 1: RETAILER PORTAL -->
+        <!-- VIEW 1: RETAILER / BUYER PORTAL (Unified Marketplace with Hidden Supplier Identity) -->
         <div id="view-retailer" class="space-y-6">
-            <div class="bg-gradient-to-r from-indigo-900 to-slate-900 rounded-2xl p-6 md:p-10 text-white shadow-xl relative overflow-hidden">
-                <div class="absolute right-0 bottom-0 opacity-10 transform translate-x-10 translate-y-10">
-                    <i class="fa-solid fa-boxes-stacked text-9xl"></i>
+            <!-- Hero Carousel -->
+            <div class="relative bg-slate-900 rounded-2xl overflow-hidden shadow-xl text-white">
+                <div id="hero-carousel-container" class="relative min-h-[320px] sm:min-h-[380px] flex items-center">
+                    <!-- Carousel Slides injected dynamically -->
                 </div>
-                <div class="max-w-2xl relative z-10">
-                    <span class="bg-indigo-500/30 text-indigo-200 text-xs px-3 py-1 rounded-full font-semibold uppercase tracking-wider border border-indigo-400/30">Verified Retailer Portal</span>
-                    <h1 class="text-3xl sm:text-4xl font-bold mt-3">Direct Wholesale Sourcing in Bangladesh</h1>
-                    <p class="text-indigo-200 mt-2 text-sm sm:text-base">Source verified products directly from trusted local manufacturers and importers with platform margin protection and secure order fulfillment.</p>
-                </div>
+                <div class="absolute bottom-4 right-6 flex items-center space-x-2 z-30" id="carousel-dots"></div>
+                <button onclick="prevSlide()" class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors z-30 shadow-lg">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <button onclick="nextSlide()" class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors z-30 shadow-lg">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
             </div>
 
             <!-- Filters & Search -->
             <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-col md:flex-row gap-4 items-center justify-between">
                 <div class="relative w-full md:w-96">
                     <i class="fa-solid fa-search absolute left-3.5 top-3.5 text-slate-400"></i>
-                    <input type="text" id="retailer-search" oninput="renderRetailerCatalog()" placeholder="Search approved wholesale products..." class="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <input type="text" id="retailer-search" oninput="renderRetailerCatalog()" placeholder="Search unified wholesale articles..." data-en-placeholder="Search unified wholesale articles..." data-bn-placeholder="পাইকারি আর্টিকেল অনুসন্ধান করুন..." data-zh-placeholder="搜索批发文章..." class="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
                 </div>
-                <div class="flex items-center space-x-2 w-full md:w-auto overflow-x-auto pb-2 md:pb-0" id="category-filters">
-                    <button onclick="filterCategory('All')" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 text-white whitespace-nowrap">All Categories</button>
-                    <button onclick="filterCategory('Shoes')" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap">Shoes</button>
-                    <button onclick="filterCategory('Clothing')" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap">Clothing</button>
-                    <button onclick="filterCategory('Cosmetics')" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap">Cosmetics</button>
-                    <button onclick="filterCategory('Electrical Items')" class="cat-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap">Electrical Items</button>
+                <div class="flex items-center space-x-2 w-full md:w-auto overflow-x-auto pb-2 md:pb-0" id="color-filters">
+                    <button onclick="filterColor('All')" class="col-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 text-white whitespace-nowrap" data-en="All Colours" data-bn="সকল কালার" data-zh="所有颜色">All Colours</button>
+                    <button onclick="filterColor('Black')" class="col-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap">Black</button>
+                    <button onclick="filterColor('Brown')" class="col-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap">Brown</button>
+                    <button onclick="filterColor('Tan')" class="col-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap">Tan</button>
+                    <button onclick="filterColor('White')" class="col-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap">White</button>
+                    <button onclick="filterColor('Navy Blue')" class="col-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap">Navy Blue</button>
                 </div>
             </div>
 
             <!-- Tabs: Catalog vs My Orders -->
-            <div class="flex border-b border-slate-200 space-x-6">
-                <button onclick="switchRetailerTab('catalog')" id="rtab-catalog" class="pb-3 border-b-2 border-indigo-600 font-semibold text-indigo-600 text-sm flex items-center space-x-2">
-                    <i class="fa-solid fa-shop"></i> <span>Wholesale Catalogue</span>
-                </button>
-                <button onclick="switchRetailerTab('orders')" id="rtab-orders" class="pb-3 border-b-2 border-transparent text-slate-500 hover:text-slate-700 font-semibold text-sm flex items-center space-x-2">
-                    <i class="fa-solid fa-clipboard-list"></i> <span>My Orders & Tracking</span> <span id="retailer-order-count" class="bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full text-xs">0</span>
+            <div class="flex border-b border-slate-200 space-x-6 justify-between items-center">
+                <div class="flex space-x-6">
+                    <button onclick="switchRetailerTab('catalog')" id="rtab-catalog" class="pb-3 border-b-2 border-indigo-600 font-semibold text-indigo-600 text-sm flex items-center space-x-2">
+                        <i class="fa-solid fa-shop"></i> <span data-en="Wholesale Catalogue" data-bn="পাইকারি ক্যাটালগ" data-zh="批发目录">Wholesale Catalogue</span>
+                    </button>
+                    <button onclick="switchRetailerTab('orders')" id="rtab-orders" class="pb-3 border-b-2 border-transparent text-slate-500 hover:text-slate-700 font-semibold text-sm flex items-center space-x-2">
+                        <i class="fa-solid fa-clipboard-list"></i> <span data-en="My Orders & Tracking" data-bn="আমার অর্ডার এবং ট্র্যাকিং" data-zh="我的订单与跟踪">My Orders & Tracking</span> <span id="retailer-order-count" class="bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full text-xs">0</span>
+                    </button>
+                </div>
+                <!-- Buyer Messenger Button inside Buyer Portal -->
+                <button onclick="openBuyerChatModal()" class="mb-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-xs font-semibold flex items-center space-x-2 shadow-sm transition-colors">
+                    <i class="fa-solid fa-comments text-sm"></i> <span data-en="Live Admin Chat" data-bn="লাইভ অ্যাডমিন চ্যাট" data-zh="实时管理聊天">Live Admin Chat</span>
+                    <span id="buyer-unread-badge" class="bg-rose-500 text-white text-[10px] px-1.5 py-0.2 rounded-full hidden">0</span>
                 </button>
             </div>
 
-            <!-- Retailer Catalog Section -->
-            <div id="retailer-catalog-section">
-                <div id="retailer-product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Products injected dynamically -->
-                </div>
-            </div>
+            <!-- Retailer Catalog Grid Section -->
+            <div id="retailer-catalog-section" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 
             <!-- Retailer Orders Section -->
-            <div id="retailer-orders-section" class="hidden space-y-4">
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-                    <div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
-                        <h3 class="font-bold text-slate-800">Order History & Fulfillment Pipeline</h3>
-                        <span class="text-xs text-slate-500">Anti-Bypass Platform Controlled</span>
-                    </div>
-                    <div class="divide-y divide-slate-100" id="retailer-orders-list">
-                        <!-- Orders injected dynamically -->
-                    </div>
+            <div id="retailer-orders-section" class="hidden bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="p-4 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
+                    <h3 class="font-bold text-slate-800 text-sm" data-en="My Bulk Orders Pipeline" data-bn="আমার বাল্ক অর্ডার পাইপলাইন" data-zh="我的批量订单管道">My Bulk Orders Pipeline</h3>
+                    <button onclick="openBuyerChatModal()" class="text-xs bg-indigo-50 text-indigo-700 px-3 py-1 rounded-lg border border-indigo-200 font-semibold hover:bg-indigo-100">
+                        <i class="fa-solid fa-comment-dots mr-1"></i> Message Admin Regarding Orders
+                    </button>
                 </div>
+                <div class="divide-y divide-slate-100" id="retailer-orders-list"></div>
             </div>
         </div>
 
-        <!-- VIEW 2: SUPPLIER PORTAL (Individual Secure Hub after Login) -->
+        <!-- VIEW 2: SUPPLIER PORTAL (Strict Private Profile & Media Vault) -->
         <div id="view-supplier" class="hidden space-y-6">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div class="bg-slate-900 text-white p-6 rounded-2xl shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
-                    <div class="flex items-center space-x-2">
-                        <span class="bg-emerald-100 text-emerald-800 text-xs px-2.5 py-1 rounded-full font-semibold"><i class="fa-solid fa-circle-check mr-1"></i> Verified Supplier Secured Hub</span>
-                        <span id="sup-login-badge" class="bg-indigo-50 border border-indigo-200 text-indigo-900 rounded-lg px-3 py-0.5 text-xs font-bold">User ID: sup1</span>
-                    </div>
-                    <h1 class="text-2xl font-bold mt-1 text-slate-900" id="sup-header-name">Rahim Enterprises Dashboard</h1>
+                    <span class="bg-indigo-600 text-white text-xs px-2.5 py-1 rounded-full font-semibold uppercase tracking-wider" id="sup-login-badge">Shop No: SHOP-001</span>
+                    <h1 class="text-2xl font-bold mt-1" id="sup-header-name">Supplier Private Portal</h1>
+                    <p class="text-indigo-200 text-sm mt-1" data-en="Upload articles with local folder photos, individual descriptions, prices, and size breakdowns securely. Your identity is hidden from buyers." data-bn="লোকাল ফোল্ডারের ছবি, নিজস্ব বিবরণ, দাম এবং সাইজ ব্রেকডাউন সহ আর্টিকেল নিরাপদে আপলোড করুন। আপনার পরিচয় ক্রেতাদের কাছে সম্পূর্ণ গোপন থাকে。" data-zh="安全上传包含本地文件夹照片、独立描述、价格和尺码明细的文章。您的身份对买家保密。">Upload articles with local folder photos, individual descriptions, prices, and size breakdowns securely. Your identity is hidden from buyers.</p>
                 </div>
-                <div class="flex items-center space-x-3">
+                <div class="flex items-center space-x-3 flex-wrap gap-y-2">
                     <button onclick="openAddProductModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2.5 rounded-xl text-sm transition-colors flex items-center space-x-2 shadow-sm">
-                        <i class="fa-solid fa-plus"></i> <span>Upload Product</span>
+                        <i class="fa-solid fa-plus-circle"></i> <span data-en="Upload Article" data-bn="আর্টিকেল আপলোড করুন" data-zh="上传文章">Upload Article</span>
                     </button>
-                    <button onclick="openUploadMediaModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-4 py-2.5 rounded-xl text-sm transition-colors flex items-center space-x-2 shadow-sm">
-                        <i class="fa-solid fa-photo-film"></i> <span>Upload Photo/Video</span>
-                    </button>
-                    <button onclick="supplierLogout()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors">
-                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    <button onclick="supplierLogout()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white px-3.5 py-2.5 rounded-xl text-sm transition-colors flex items-center space-x-1.5 border border-slate-700">
+                        <i class="fa-solid fa-right-from-bracket"></i> <span data-en="Log Out" data-bn="লগ আউট" data-zh="登出">Log Out</span>
                     </button>
                 </div>
             </div>
 
-            <!-- Supplier Stats -->
+            <!-- Supplier Summary Cards -->
             <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
                 <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-                    <p class="text-xs font-semibold text-slate-500 uppercase">My Active Products</p>
-                    <h4 class="text-2xl font-bold mt-1 text-slate-800" id="sup-stat-products">0</h4>
+                    <p class="text-xs font-semibold text-slate-500 uppercase" data-en="My Active Articles" data-bn="আমার সক্রিয় আর্টিকেল" data-zh="我的有效文章">My Active Articles</p>
+                    <h4 class="text-2xl font-bold mt-1 text-slate-900" id="sup-stat-products">0</h4>
                 </div>
                 <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-                    <p class="text-xs font-semibold text-slate-500 uppercase">Private Media Vault (Photos/Videos)</p>
-                    <h4 class="text-2xl font-bold mt-1 text-emerald-600" id="sup-stat-media">0</h4>
+                    <p class="text-xs font-semibold text-slate-500 uppercase" data-en="Uploaded Pictures & Videos" data-bn="আপলোডকৃত ছবি ও ভিডিও" data-zh="已上传图片与视频">Uploaded Pictures & Videos</p>
+                    <h4 class="text-2xl font-bold mt-1 text-indigo-600" id="sup-stat-pics">0</h4>
                 </div>
                 <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-                    <p class="text-xs font-semibold text-slate-500 uppercase">Assigned Orders</p>
-                    <h4 class="text-2xl font-bold mt-1 text-indigo-600" id="sup-stat-orders">0</h4>
+                    <p class="text-xs font-semibold text-slate-500 uppercase" data-en="Assigned Orders" data-bn="নির্ধারিত অর্ডার" data-zh="分配订单">Assigned Orders</p>
+                    <h4 class="text-2xl font-bold mt-1 text-emerald-600" id="sup-stat-orders">0</h4>
                 </div>
                 <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-                    <p class="text-xs font-semibold text-slate-500 uppercase">Total Payout Revenue</p>
+                    <p class="text-xs font-semibold text-slate-500 uppercase" data-en="Total Earned Payout" data-bn="মোট অর্জিত পেআউট" data-zh="总收入">Total Earned Payout</p>
                     <h4 class="text-2xl font-bold mt-1 text-emerald-600" id="sup-stat-revenue">৳0</h4>
                 </div>
             </div>
@@ -170,73 +198,58 @@
             <!-- Supplier Tabs -->
             <div class="flex border-b border-slate-200 space-x-6 overflow-x-auto">
                 <button onclick="switchSupplierTab('products')" id="stab-products" class="pb-3 border-b-2 border-indigo-600 font-semibold text-indigo-600 text-sm whitespace-nowrap flex items-center space-x-2">
-                    <i class="fa-solid fa-boxes-stacked"></i> <span>My Uploaded Products</span>
-                </button>
-                <button onclick="switchSupplierTab('media')" id="stab-media" class="pb-3 border-b-2 border-transparent text-slate-500 hover:text-slate-700 font-semibold text-sm whitespace-nowrap flex items-center space-x-2">
-                    <i class="fa-solid fa-video"></i> <span>My Private Media Vault (Strictly Confidential)</span>
+                    <i class="fa-solid fa-boxes-stacked"></i> <span data-en="My Articles & Media Vault" data-bn="আমার আর্টিকেল ও মিডিয়া ভল্ট" data-zh="我的文章与媒体库">My Articles & Media Vault</span>
                 </button>
                 <button onclick="switchSupplierTab('orders')" id="stab-orders" class="pb-3 border-b-2 border-transparent text-slate-500 hover:text-slate-700 font-semibold text-sm whitespace-nowrap flex items-center space-x-2">
-                    <i class="fa-solid fa-truck-ramp-box"></i> <span>Order Fulfillment Queue</span>
+                    <i class="fa-solid fa-truck-fast"></i> <span data-en="Assigned Orders Pipeline" data-bn="নির্ধারিত অর্ডার পাইপলাইন" data-zh="分配订单管道">Assigned Orders Pipeline</span>
                 </button>
             </div>
 
             <!-- Supplier Products Section -->
             <div id="supplier-products-section" class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="p-4 bg-indigo-50 border-b border-indigo-100 text-indigo-900 text-xs flex items-center justify-between">
+                    <span><i class="fa-solid fa-user-lock mr-1"></i> <strong>Strict Isolation:</strong> Only you and the Admin can view this inventory. Buyers see your articles without your supplier name or Shop No.</span>
+                </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
                             <tr class="bg-slate-50 border-b border-slate-200 text-xs font-semibold text-slate-500 uppercase">
-                                <th class="p-4">Product Info</th>
-                                <th class="p-4">Category</th>
-                                <th class="p-4">Supplier Base Price</th>
-                                <th class="p-4">Stock & MOQ</th>
+                                <th class="p-4">Article Name & Local Photo</th>
+                                <th class="p-4">Colour</th>
+                                <th class="p-4">Base Price</th>
+                                <th class="p-4">Size Breakup & Total Qty</th>
                                 <th class="p-4">Admin Status</th>
                                 <th class="p-4 text-right">Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="supplier-products-table" class="divide-y divide-slate-100 text-sm">
-                            <!-- Injected dynamically -->
-                        </tbody>
+                        <tbody id="supplier-products-table" class="divide-y divide-slate-100 text-sm"></tbody>
                     </table>
-                </div>
-            </div>
-
-            <!-- Supplier Private Media Section -->
-            <div id="supplier-media-section" class="hidden space-y-4">
-                <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl flex items-center justify-between">
-                    <div class="flex items-center space-x-3 text-amber-900 text-xs sm:text-sm">
-                        <i class="fa-solid fa-user-lock text-lg"></i>
-                        <span><strong>Strict Individual Privacy:</strong> These photos, factory videos, and files are stored exclusively in your vault. Only you (via your User ID & password) and OliGlobal Administrators can access this page. Other suppliers or retailers cannot see these files.</span>
-                    </div>
-                    <button onclick="openUploadMediaModal()" class="bg-emerald-600 text-white px-3 py-1.5 rounded-lg text-xs font-semibold shadow-sm hover:bg-emerald-700 whitespace-nowrap">Upload Media</button>
-                </div>
-                <div id="supplier-media-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Media injected dynamically -->
                 </div>
             </div>
 
             <!-- Supplier Orders Section -->
             <div id="supplier-orders-section" class="hidden bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
                 <div class="p-4 border-b border-slate-100 bg-slate-50">
-                    <h3 class="font-bold text-slate-800 text-sm">Assigned Orders Queue</h3>
+                    <h3 class="font-bold text-slate-800 text-sm">Assigned Orders Queue (Buyer Identity Hidden)</h3>
                 </div>
-                <div class="divide-y divide-slate-100" id="supplier-orders-list">
-                    <!-- Injected dynamically -->
-                </div>
+                <div class="divide-y divide-slate-100" id="supplier-orders-list"></div>
             </div>
         </div>
 
-        <!-- VIEW 3: ADMIN CONTROL -->
+        <!-- VIEW 3: ADMIN CONTROL CENTER -->
         <div id="view-admin" class="hidden space-y-6">
             <div class="bg-slate-900 text-white p-6 rounded-2xl shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
                     <span class="bg-indigo-600 text-white text-xs px-2.5 py-1 rounded-full font-semibold uppercase tracking-wider">Master Platform Control</span>
                     <h1 class="text-2xl font-bold mt-1">OliGlobal Admin Control Center</h1>
-                    <p class="text-indigo-200 text-sm mt-1">Create supplier credentials, manage verification badges, audit individual supplier media vaults, and monitor margins.</p>
+                    <p class="text-indigo-200 text-sm mt-1">Full visibility over hidden Supplier IDs, Shop Nos, local photo/video media vaults, and buyer inquiry logs.</p>
                 </div>
-                <div class="flex items-center space-x-3">
+                <div class="flex items-center space-x-3 flex-wrap gap-y-2">
+                    <button onclick="openAdminBroadcastModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2.5 rounded-xl text-sm transition-colors flex items-center space-x-2 shadow-sm">
+                        <i class="fa-solid fa-bullhorn"></i> <span>Send Admin Broadcast / Message Buyer</span>
+                    </button>
                     <button onclick="openCreateSupplierModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-4 py-2.5 rounded-xl text-sm transition-colors flex items-center space-x-2 shadow-sm">
-                        <i class="fa-solid fa-user-plus"></i> <span>Create New Supplier Profile</span>
+                        <i class="fa-solid fa-user-plus"></i> <span>Create New Supplier Profile (Shop No.)</span>
                     </button>
                 </div>
             </div>
@@ -244,26 +257,26 @@
             <!-- Admin Nav Tabs -->
             <div class="flex border-b border-slate-200 space-x-6 overflow-x-auto">
                 <button onclick="switchAdminTab('suppliers')" id="atab-suppliers" class="pb-3 border-b-2 border-indigo-600 font-semibold text-indigo-600 text-sm whitespace-nowrap flex items-center space-x-2">
-                    <i class="fa-solid fa-users-gear"></i> <span>Supplier Accounts & Credentials</span>
+                    <i class="fa-solid fa-users-gear"></i> <span>Suppliers & Hidden Shop IDs</span>
                 </button>
                 <button onclick="switchAdminTab('products')" id="atab-products" class="pb-3 border-b-2 border-transparent text-slate-500 hover:text-slate-700 font-semibold text-sm whitespace-nowrap flex items-center space-x-2">
-                    <i class="fa-solid fa-list-check"></i> <span>Product Moderation & Pricing</span>
+                    <i class="fa-solid fa-list-check"></i> <span>Article & Media Mapping</span>
                 </button>
-                <button onclick="switchAdminTab('vaults')" id="atab-vaults" class="pb-3 border-b-2 border-transparent text-slate-500 hover:text-slate-700 font-semibold text-sm whitespace-nowrap flex items-center space-x-2">
-                    <i class="fa-solid fa-vault"></i> <span>Audit Supplier Private Media Vaults</span>
+                <button onclick="switchAdminTab('inquiries')" id="atab-inquiries" class="pb-3 border-b-2 border-transparent text-slate-500 hover:text-slate-700 font-semibold text-sm whitespace-nowrap flex items-center space-x-2">
+                    <i class="fa-solid fa-comments"></i> <span>Buyer Inquiries & Chat (<span id="admin-msg-badge-count">0</span>)</span>
                 </button>
                 <button onclick="switchAdminTab('orders')" id="atab-orders" class="pb-3 border-b-2 border-transparent text-slate-500 hover:text-slate-700 font-semibold text-sm whitespace-nowrap flex items-center space-x-2">
-                    <i class="fa-solid fa-clipboard-check"></i> <span>Full Lifecycle Orders</span>
+                    <i class="fa-solid fa-clipboard-check"></i> <span>Full Lifecycle Orders & Supplier Mapping</span>
                 </button>
                 <button onclick="switchAdminTab('finances')" id="atab-finances" class="pb-3 border-b-2 border-transparent text-slate-500 hover:text-slate-700 font-semibold text-sm whitespace-nowrap flex items-center space-x-2">
                     <i class="fa-solid fa-wallet"></i> <span>Financial Ledgers & Margins</span>
                 </button>
             </div>
 
-            <!-- Admin Tab 1: Supplier Accounts & Credentials Management -->
+            <!-- Admin Tab 1: Supplier Accounts & Hidden Shop IDs -->
             <div id="admin-suppliers-section" class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
                 <div class="p-4 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
-                    <h3 class="font-bold text-slate-800 text-sm">Registered Supplier Portals, User IDs & Passwords</h3>
+                    <h3 class="font-bold text-slate-800 text-sm">Registered Suppliers & Backend Shop Numbers (Hidden from Buyers & Other Suppliers)</h3>
                     <button onclick="openCreateSupplierModal()" class="text-xs bg-indigo-600 text-white px-3 py-1.5 rounded-lg font-semibold hover:bg-indigo-700">+ Create Supplier Account</button>
                 </div>
                 <div class="overflow-x-auto">
@@ -271,69 +284,57 @@
                         <thead>
                             <tr class="bg-slate-50 border-b border-slate-200 text-xs font-semibold text-slate-500 uppercase">
                                 <th class="p-4">Supplier Name & Location</th>
-                                <th class="p-4">User ID (Login)</th>
-                                <th class="p-4">Password</th>
-                                <th class="p-4">Trade License</th>
+                                <th class="p-4">Hidden Shop No. / ID</th>
+                                <th class="p-4">Username & Password</th>
+                                <th class="p-4">Articles Uploaded</th>
                                 <th class="p-4">Status</th>
                                 <th class="p-4 text-right">Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="admin-suppliers-table" class="divide-y divide-slate-100 text-sm">
-                            <!-- Injected dynamically -->
-                        </tbody>
+                        <tbody id="admin-suppliers-table" class="divide-y divide-slate-100 text-sm"></tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- Admin Tab 2: Product Moderation -->
+            <!-- Admin Tab 2: Article & Media Mapping -->
             <div id="admin-products-section" class="hidden bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
                 <div class="p-4 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
-                    <h3 class="font-bold text-slate-800 text-sm">Pending & Approved Supplier Products (Base Price Confidentiality Check)</h3>
-                    <span class="text-xs text-amber-600 font-medium"><i class="fa-solid fa-lock mr-1"></i> Base prices strictly hidden from Retailers</span>
+                    <h3 class="font-bold text-slate-800 text-sm">Complete Article-to-Supplier Mapping (Backend Traceability)</h3>
+                    <span class="text-xs text-amber-600 font-medium"><i class="fa-solid fa-lock mr-1"></i> Supplier identity strictly concealed from public catalog</span>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
                             <tr class="bg-slate-50 border-b border-slate-200 text-xs font-semibold text-slate-500 uppercase">
-                                <th class="p-4">Product & Supplier</th>
-                                <th class="p-4">Category</th>
-                                <th class="p-4 text-emerald-700">Supplier Base Price</th>
-                                <th class="p-4 text-indigo-700">Platform Selling Price</th>
+                                <th class="p-4">Article Name & Local Photo</th>
+                                <th class="p-4 text-indigo-700">Hidden Supplier ID (Shop No)</th>
+                                <th class="p-4">Colour & Size Breakdown</th>
+                                <th class="p-4 text-emerald-700">Base Price</th>
+                                <th class="p-4 text-indigo-700">Platform Price</th>
                                 <th class="p-4">Status</th>
-                                <th class="p-4 text-right">Moderation Action</th>
+                                <th class="p-4 text-right">Moderation</th>
                             </tr>
                         </thead>
-                        <tbody id="admin-products-table" class="divide-y divide-slate-100 text-sm">
-                            <!-- Injected dynamically -->
-                        </tbody>
+                        <tbody id="admin-products-table" class="divide-y divide-slate-100 text-sm"></tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- Admin Tab 3: Audit Supplier Private Media Vaults -->
-            <div id="admin-vaults-section" class="hidden space-y-6">
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                    <h3 class="font-bold text-slate-900 text-base mb-2">Audit Individual Supplier Private Media Vaults</h3>
-                    <p class="text-xs text-slate-500 mb-4">Select any verified supplier below to inspect their restricted photos, videos, and factory audits.</p>
-                    
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6" id="admin-supplier-vault-audit-buttons">
-                        <!-- Injected dynamically -->
-                    </div>
-
-                    <div id="admin-audit-display-area" class="border-t border-slate-100 pt-6">
-                        <!-- Vault content for selected supplier injected here -->
-                    </div>
+            <!-- Admin Tab 3: Buyer Inquiries & Chat Messages Center -->
+            <div id="admin-inquiries-section" class="hidden bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="p-4 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
+                    <h3 class="font-bold text-slate-800 text-sm">Buyer Inquiries & Chat Messages Center</h3>
+                    <button onclick="openAdminBroadcastModal()" class="text-xs bg-indigo-600 text-white px-3 py-1.5 rounded-lg font-semibold hover:bg-indigo-700"><i class="fa-solid fa-paper-plane mr-1"></i> Send New Message to Buyer</button>
                 </div>
+                <div class="divide-y divide-slate-100" id="admin-inquiries-list"></div>
             </div>
 
-            <!-- Admin Tab 4: Full Lifecycle Orders -->
+            <!-- Admin Tab 4: Full Lifecycle Orders with Supplier Mapping -->
             <div id="admin-orders-section" class="hidden bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
                 <div class="p-4 border-b border-slate-100 bg-slate-50">
-                    <h3 class="font-bold text-slate-800 text-sm">Master Order Pipeline Tracking</h3>
+                    <h3 class="font-bold text-slate-800 text-sm">Master Order Pipeline & Supplier Traceability</h3>
                 </div>
-                <div class="divide-y divide-slate-100" id="admin-orders-list">
-                    <!-- Injected dynamically -->
-                </div>
+                <div class="divide-y divide-slate-100" id="admin-orders-list"></div>
             </div>
 
             <!-- Admin Tab 5: Financial Ledgers -->
@@ -354,14 +355,47 @@
                 </div>
                 <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
                     <h3 class="font-bold text-slate-800 mb-4">Financial Margin Analytics</h3>
-                    <div class="space-y-3" id="admin-ledger-breakdown">
-                        <!-- Injected dynamically -->
-                    </div>
+                    <div class="space-y-3" id="admin-ledger-breakdown"></div>
                 </div>
             </div>
         </div>
 
     </main>
+
+    <!-- Buyer Portal Login Modal -->
+    <div id="modal-buyer-login" class="fixed inset-0 bg-slate-900/70 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl max-w-md w-full p-8 shadow-2xl relative">
+            <div class="flex justify-between items-center pb-4 border-b border-slate-100 mb-4">
+                <div class="flex items-center space-x-2">
+                    <div class="bg-indigo-600 text-white p-2 rounded-lg font-bold"><i class="fa-solid fa-store"></i></div>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900">Buyer Portal Login</h3>
+                        <p class="text-xs text-slate-500">Access unified wholesale catalog & track orders</p>
+                    </div>
+                </div>
+                <button onclick="closeBuyerLoginModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            
+            <form onsubmit="handleBuyerLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Buyer / Retailer Username</label>
+                    <input type="text" id="buyer-login-user" required placeholder="e.g. gulshan_fashion" value="gulshan_fashion" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Password</label>
+                    <input type="password" id="buyer-login-pass" required placeholder="••••••••" value="password123" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-xs text-slate-600 space-y-1">
+                    <p class="font-bold text-slate-700"><i class="fa-solid fa-circle-info mr-1 text-indigo-600"></i> Demo Buyer Credentials:</p>
+                    <p>• <strong>User:</strong> gulshan_fashion | <strong>Pass:</strong> password123</p>
+                </div>
+                <div class="pt-2 flex justify-end space-x-3">
+                    <button type="button" onclick="closeBuyerLoginModal()" class="px-4 py-2 border border-slate-200 text-slate-600 rounded-lg text-sm font-medium">Cancel</button>
+                    <button type="submit" class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-semibold shadow-sm transition-colors">Sign In as Buyer</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- Supplier Portal Login Modal -->
     <div id="modal-supplier-login" class="fixed inset-0 bg-slate-900/70 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
@@ -371,7 +405,7 @@
                     <div class="bg-indigo-600 text-white p-2 rounded-lg font-bold">SUP</div>
                     <div>
                         <h3 class="text-lg font-bold text-slate-900">Supplier Portal Login</h3>
-                        <p class="text-xs text-slate-500">Access your secure individual dashboard & media vault</p>
+                        <p class="text-xs text-slate-500">Access your private profile & local media vault</p>
                     </div>
                 </div>
                 <button onclick="closeSupplierPortalModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
@@ -379,8 +413,8 @@
             
             <form onsubmit="handleSupplierLogin(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Supplier User ID</label>
-                    <input type="text" id="login-userid" required placeholder="e.g. sup1" value="sup1" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Supplier Username</label>
+                    <input type="text" id="login-username" required placeholder="e.g. rahim_sup" value="rahim_sup" class="w-full px-3.5 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Password</label>
@@ -388,9 +422,9 @@
                 </div>
                 <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-xs text-slate-600 space-y-1">
                     <p class="font-bold text-slate-700"><i class="fa-solid fa-circle-info mr-1 text-indigo-600"></i> Demo Supplier Credentials:</p>
-                    <p>• <strong>ID:</strong> sup1 | <strong>Pass:</strong> password123 (Rahim Enterprises)</p>
-                    <p>• <strong>ID:</strong> sup2 | <strong>Pass:</strong> password123 (Bengal Cosmetics)</p>
-                    <p>• <strong>ID:</strong> sup3 | <strong>Pass:</strong> password123 (Dhaka Electric)</p>
+                    <p>• <strong>User:</strong> rahim_sup | <strong>Pass:</strong> password123 (Shop: SHOP-001)</p>
+                    <p>• <strong>User:</strong> karim_sup | <strong>Pass:</strong> password123 (Shop: SHOP-002)</p>
+                    <p>• <strong>User:</strong> hasan_sup | <strong>Pass:</strong> password123 (Shop: SHOP-003)</p>
                 </div>
                 <div class="pt-2 flex justify-end space-x-3">
                     <button type="button" onclick="closeSupplierPortalModal()" class="px-4 py-2 border border-slate-200 text-slate-600 rounded-lg text-sm font-medium">Cancel</button>
@@ -408,7 +442,7 @@
                     <div class="bg-slate-900 text-white p-2 rounded-lg font-bold"><i class="fa-solid fa-shield-halved"></i></div>
                     <div>
                         <h3 class="text-lg font-bold text-slate-900">Admin Control Center Login</h3>
-                        <p class="text-xs text-slate-500">Restricted access for OliGlobal platform administrators</p>
+                        <p class="text-xs text-slate-500">Restricted access for platform administrators</p>
                     </div>
                 </div>
                 <button onclick="closeAdminLoginModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
@@ -435,128 +469,116 @@
         </div>
     </div>
 
-    <!-- Admin Create Supplier Account Modal -->
+    <!-- Admin Create Supplier Profile Modal -->
     <div id="modal-create-supplier" class="fixed inset-0 bg-slate-900/60 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center pb-4 border-b border-slate-100">
-                <h3 class="text-lg font-bold text-slate-900"><i class="fa-solid fa-user-plus text-emerald-600 mr-2"></i> Create Supplier Profile & Credentials</h3>
+                <h3 class="text-lg font-bold text-slate-900"><i class="fa-solid fa-user-plus text-emerald-600 mr-2"></i> Create Supplier Profile & Hidden Shop ID</h3>
                 <button onclick="closeCreateSupplierModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <form id="form-create-supplier" onsubmit="handleCreateSupplier(event)" class="space-y-4 pt-4">
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Company / Supplier Name</label>
-                    <input type="text" id="newsup-name" required placeholder="e.g. Uttara Textile Mills" class="w-full px-3.5 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Company / Supplier Name</label>
+                        <input type="text" id="newsup-name" required placeholder="e.g. Uttara Textile Mills" class="w-full px-3.5 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-indigo-700 uppercase mb-1">Hidden Shop No. / ID</label>
+                        <input type="text" id="newsup-shopid" required placeholder="e.g. SHOP-004" value="SHOP-004" class="w-full px-3.5 py-2 border border-indigo-300 bg-indigo-50/50 rounded-lg text-sm font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    </div>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">User ID (Login)</label>
-                        <input type="text" id="newsup-userid" required placeholder="e.g. sup4" class="w-full px-3.5 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Login Username</label>
+                        <input type="text" id="newsup-username" required placeholder="uttara_sup" class="w-full px-3.5 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Password</label>
-                        <input type="text" id="newsup-pass" required placeholder="securepass123" value="securepass123" class="w-full px-3.5 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <input type="text" id="newsup-pass" required placeholder="password123" value="password123" class="w-full px-3.5 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
                     </div>
                 </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Location / Factory Address</label>
-                        <input type="text" id="newsup-location" required placeholder="Narayanganj, Bangladesh" class="w-full px-3.5 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Trade License No.</label>
-                        <input type="text" id="newsup-license" required placeholder="TRAD/NRG/99281/2026" class="w-full px-3.5 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                    </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Location / Factory Address</label>
+                    <input type="text" id="newsup-location" required placeholder="Narayanganj, Bangladesh" class="w-full px-3.5 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
                 </div>
                 <div class="pt-2 flex justify-end space-x-3">
                     <button type="button" onclick="closeCreateSupplierModal()" class="px-4 py-2 border border-slate-200 text-slate-600 rounded-lg text-sm font-medium">Cancel</button>
-                    <button type="submit" class="px-5 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 shadow-sm">Save Supplier & Credentials</button>
+                    <button type="submit" class="px-5 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 shadow-sm">Save Supplier Profile</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Add Product Modal (Supplier) -->
+    <!-- Supplier Add Article Modal (Fully Customizable Size & Quantity Cards Layout) -->
     <div id="modal-add-product" class="fixed inset-0 bg-slate-900/60 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-xl w-full p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center pb-4 border-b border-slate-100">
-                <h3 class="text-lg font-bold text-slate-900"><i class="fa-solid fa-plus-circle text-indigo-600 mr-2"></i> Upload New Wholesale Product</h3>
+                <h3 class="text-lg font-bold text-slate-900"><i class="fa-solid fa-plus-circle text-indigo-600 mr-2"></i> Upload Article (Local Folder Photos & Size Breakup)</h3>
                 <button onclick="closeAddProductModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <form id="form-add-product" onsubmit="handleProductUpload(event)" class="space-y-4 pt-4">
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Product Name</label>
-                    <input type="text" id="prod-name" required placeholder="e.g. Premium Leather Formal Shoes" class="w-full px-3.5 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                </div>
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Category</label>
-                        <select id="prod-category" class="w-full px-3.5 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                            <option value="Shoes">Shoes</option>
-                            <option value="Clothing">Clothing</option>
-                            <option value="Cosmetics">Cosmetics</option>
-                            <option value="Electrical Items">Electrical Items</option>
+                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Article Name</label>
+                        <input type="text" id="art-name" required placeholder="e.g. Oxford Formal Art-202" class="w-full px-3.5 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Colour (Dropdown)</label>
+                        <select id="art-colour" class="w-full px-3.5 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            <option value="Black">Black</option>
+                            <option value="Brown">Brown</option>
+                            <option value="Tan">Tan</option>
+                            <option value="White">White</option>
+                            <option value="Navy Blue">Navy Blue</option>
                         </select>
                     </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Supplier Base Price (৳)</label>
-                        <input type="number" id="prod-price" required min="100" placeholder="1500" class="w-full px-3.5 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                    </div>
                 </div>
+
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Min. Order Quantity (MOQ)</label>
-                        <input type="number" id="prod-moq" required min="1" value="10" class="w-full px-3.5 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Base Price per Pair (৳)</label>
+                        <input type="number" id="art-price" required min="100" placeholder="1500" class="w-full px-3.5 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Available Stock</label>
-                        <input type="number" id="prod-stock" required min="10" value="500" class="w-full px-3.5 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Upload Photo from Local Folder</label>
+                        <input type="file" id="art-photo" accept="image/*" required class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
                     </div>
                 </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Catalog Image URL</label>
-                    <input type="text" id="prod-image" placeholder="https://images.unsplash.com/photo-..." value="https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=600&q=80" class="w-full px-3.5 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Upload Video (Optional)</label>
+                        <input type="file" id="art-video" accept="video/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Individual Item Description</label>
+                        <input type="text" id="art-desc" required placeholder="e.g. Pure cow leather with anti-slip rubber sole" class="w-full px-3.5 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Product Description</label>
-                    <textarea id="prod-desc" rows="3" class="w-full px-3.5 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">High-grade export quality wholesale item with standard protective packaging.</textarea>
+
+                <!-- Fully Customizable Size & Quantity Breakup Cards -->
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+                    <div class="flex justify-between items-center">
+                        <label class="block text-xs font-bold text-slate-700 uppercase"><i class="fa-solid fa-ruler mr-1 text-indigo-600"></i> Size & Quantity Breakup (Fully Customizable)</label>
+                        <button type="button" onclick="addCustomSizeField()" class="text-xs bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg font-semibold flex items-center space-x-1 shadow-sm transition-colors">
+                            <i class="fa-solid fa-plus"></i> <span>Add Custom Size</span>
+                        </button>
+                    </div>
+                    <p class="text-[11px] text-slate-500">Type any size label (e.g. 42, UK-8, M) and pairs. Total Qty will auto-sum.</p>
+                    
+                    <div id="custom-sizes-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-48 overflow-y-auto pr-1">
+                        <!-- Dynamically populated size cards -->
+                    </div>
+                    
+                    <div class="flex justify-between items-center pt-3 border-t border-slate-200">
+                        <span class="text-xs font-bold text-slate-700">Total Calculated Qty:</span>
+                        <span class="text-base font-extrabold text-indigo-600" id="total-sum-qty">13 Pairs</span>
+                    </div>
                 </div>
+
                 <div class="pt-2 flex justify-end space-x-3">
                     <button type="button" onclick="closeAddProductModal()" class="px-4 py-2 border border-slate-200 text-slate-600 rounded-lg text-sm font-medium hover:bg-slate-50">Cancel</button>
-                    <button type="submit" class="px-5 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 shadow-sm">Submit to Admin</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Upload Media Modal (Supplier Private Vault: Pictures & Videos) -->
-    <div id="modal-upload-media" class="fixed inset-0 bg-slate-900/60 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
-            <div class="flex justify-between items-center pb-4 border-b border-slate-100">
-                <h3 class="text-lg font-bold text-slate-900"><i class="fa-solid fa-photo-film text-emerald-600 mr-2"></i> Add Private Media Asset</h3>
-                <button onclick="closeUploadMediaModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
-            <form id="form-upload-media" onsubmit="handleMediaUpload(event)" class="space-y-4 pt-4">
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Media Title / Description</label>
-                    <input type="text" id="media-title" required placeholder="e.g. Factory Floor Assembly Line 1" class="w-full px-3.5 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Media Type</label>
-                    <select id="media-type" class="w-full px-3.5 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                        <option value="photo">Photo / Image</option>
-                        <option value="video">Video Walkthrough / Clip</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Media / Image / Video URL</label>
-                    <input type="text" id="media-url" required placeholder="https://images.unsplash.com/... or video link" value="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80" class="w-full px-3.5 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                </div>
-                <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200 text-emerald-800 text-xs">
-                    <i class="fa-solid fa-shield-halved mr-1"></i> Secured in your private vault. Only accessible by your User ID & password and OliGlobal Admin.
-                </div>
-                <div class="pt-2 flex justify-end space-x-3">
-                    <button type="button" onclick="closeUploadMediaModal()" class="px-4 py-2 border border-slate-200 text-slate-600 rounded-lg text-sm font-medium">Cancel</button>
-                    <button type="submit" class="px-5 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 shadow-sm">Save to Private Vault</button>
+                    <button type="submit" class="px-5 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 shadow-sm">Submit Article (Hidden Shop ID Linked)</button>
                 </div>
             </form>
         </div>
@@ -569,9 +591,90 @@
                 <h3 class="text-lg font-bold text-slate-900"><i class="fa-solid fa-cart-shopping text-indigo-600 mr-2"></i> Place Bulk Wholesale Order</h3>
                 <button onclick="closeOrderModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
-            <div id="order-modal-content" class="py-4 space-y-4">
-                <!-- Dynamically populated -->
+            <div id="order-modal-content" class="py-4 space-y-4"></div>
+        </div>
+    </div>
+
+    <!-- Ask Admin Inquiry Modal ("Contact Admin About This Article") -->
+    <div id="modal-inquiry" class="fixed inset-0 bg-slate-900/60 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+            <div class="flex justify-between items-center pb-4 border-b border-slate-100">
+                <h3 class="text-lg font-bold text-slate-900"><i class="fa-solid fa-comments text-indigo-600 mr-2"></i> Ask Admin About Article</h3>
+                <button onclick="closeInquiryModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
+            <form onsubmit="submitInquiry(event)" class="space-y-4 pt-4">
+                <input type="hidden" id="inq-product-id">
+                <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs text-slate-700">
+                    <span class="font-bold block text-slate-900" id="inq-product-name">Article Name</span>
+                    <span class="text-indigo-600">Your inquiry will be sent directly to OliGlobal Admin (Supplier identity is kept confidential).</span>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Your Question / Order Inquiry</label>
+                    <textarea id="inq-message" rows="4" required class="w-full px-3.5 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">I need this article. Please confirm custom quantity breakdown and delivery timeline.</textarea>
+                </div>
+                <div class="pt-2 flex justify-end space-x-3">
+                    <button type="button" onclick="closeInquiryModal()" class="px-4 py-2 border border-slate-200 text-slate-600 rounded-lg text-sm font-medium">Cancel</button>
+                    <button type="submit" class="px-5 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 shadow-sm">Send Inquiry to Admin</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Buyer Live Chat / Messages Modal -->
+    <div id="modal-buyer-chat" class="fixed inset-0 bg-slate-900/60 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full shadow-2xl relative flex flex-col h-[600px] overflow-hidden">
+            <!-- Modal Header -->
+            <div class="p-4 bg-slate-900 text-white flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-9 h-9 rounded-full bg-indigo-600 flex items-center justify-center font-bold">OG</div>
+                    <div>
+                        <h3 class="font-bold text-sm">OliGlobal Admin & Support Chat</h3>
+                        <p class="text-[10px] text-emerald-400 flex items-center"><span class="w-2 h-2 rounded-full bg-emerald-500 inline-block mr-1"></span> Online • Confidential B2B Hub</p>
+                    </div>
+                </div>
+                <button onclick="closeBuyerChatModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            
+            <!-- Chat Messages Box -->
+            <div id="buyer-chat-messages" class="flex-grow p-4 overflow-y-auto space-y-3 bg-slate-50">
+                <!-- Chat history will be rendered dynamically -->
+            </div>
+
+            <!-- Chat Input Area -->
+            <form onsubmit="sendBuyerChatMessage(event)" class="p-3 bg-white border-t border-slate-200 flex gap-2">
+                <input type="text" id="buyer-chat-input" required placeholder="Type a message or order question to Admin..." class="flex-grow px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-colors flex items-center space-x-1 shadow-sm">
+                    <i class="fa-solid fa-paper-plane"></i> <span class="hidden sm:inline">Send</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Broadcast / Direct Message Modal -->
+    <div id="modal-admin-broadcast" class="fixed inset-0 bg-slate-900/60 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+            <div class="flex justify-between items-center pb-4 border-b border-slate-100">
+                <h3 class="text-lg font-bold text-slate-900"><i class="fa-solid fa-paper-plane text-indigo-600 mr-2"></i> Send Admin Message to Buyer</h3>
+                <button onclick="closeAdminBroadcastModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form onsubmit="submitAdminBroadcast(event)" class="space-y-4 pt-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Select Buyer / Retailer</label>
+                    <select id="admin-target-buyer" class="w-full px-3.5 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <option value="Gulshan Fashion Hub">Gulshan Fashion Hub</option>
+                        <option value="Banani Wholesale House">Banani Wholesale House</option>
+                        <option value="Uttara Retail Syndicate">Uttara Retail Syndicate</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Message Content</label>
+                    <textarea id="admin-broadcast-msg" rows="4" required class="w-full px-3.5 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Type message regarding wholesale order or custom sizing..."></textarea>
+                </div>
+                <div class="pt-2 flex justify-end space-x-3">
+                    <button type="button" onclick="closeAdminBroadcastModal()" class="px-4 py-2 border border-slate-200 text-slate-600 rounded-lg text-sm font-medium">Cancel</button>
+                    <button type="submit" class="px-5 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 shadow-sm">Send Message to Buyer</button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -579,139 +682,219 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
             <div class="flex items-center space-x-2">
                 <div class="bg-indigo-600 text-white p-1.5 rounded font-bold text-sm">OG</div>
-                <span class="text-white font-semibold">OliGlobal B2B Wholesale Marketplace</span>
+                <span class="text-white font-semibold">OliGlobal Private B2B Wholesale Marketplace</span>
             </div>
-            <p>© 2026 OliGlobal (OliB2BGlobal.com). Private managed B2B ecosystem with secure individual supplier login & media vaults.</p>
+            <p>© 2026 OliGlobal (OliB2BGlobal.com). Private managed B2B ecosystem with hidden Shop IDs & strict anti-bypass protection.</p>
             <div class="flex space-x-4">
-                <span class="text-emerald-400"><i class="fa-solid fa-shield-halved mr-1"></i> Anti-Bypass Protected</span>
+                <span class="text-emerald-400"><i class="fa-solid fa-shield-halved mr-1"></i> Supplier Identity Concealed</span>
             </div>
         </div>
     </footer>
 
     <script>
-        // Supplier Registry with User IDs and Passwords (Admin Managed)
-        let suppliersList = [
-            { id: 'sup1', userId: 'sup1', password: 'password123', name: 'Rahim Enterprises', code: 'SUP-8821', location: 'Dhaka, Bangladesh', tradeLicense: 'TRAD/DNCC/19283/2023', status: 'Active' },
-            { id: 'sup2', userId: 'sup2', password: 'password123', name: 'Bengal Cosmetics Ltd', code: 'SUP-9912', location: 'Chattogram, Bangladesh', tradeLicense: 'TRAD/CC/44921/2024', status: 'Active' },
-            { id: 'sup3', userId: 'sup3', password: 'password123', name: 'Dhaka Electric Co.', code: 'SUP-7734', location: 'Gazipur, Bangladesh', tradeLicense: 'TRAD/GZ/11029/2023', status: 'Active' }
+        // Language state: 'en', 'bn', or 'zh'
+        let currentLanguage = 'en';
+
+        function toggleLanguage() {
+            if (currentLanguage === 'en') {
+                currentLanguage = 'bn';
+            } else if (currentLanguage === 'bn') {
+                currentLanguage = 'zh';
+            } else {
+                currentLanguage = 'en';
+            }
+
+            const langLabel = document.getElementById('lang-label');
+            if (langLabel) {
+                if (currentLanguage === 'en') langLabel.innerText = 'English';
+                else if (currentLanguage === 'bn') langLabel.innerText = 'বাংলা';
+                else if (currentLanguage === 'zh') langLabel.innerText = '中文';
+            }
+            applyLanguage();
+            showToast(currentLanguage === 'bn' ? 'বাংলা ভাষা সক্রিয় করা হয়েছে।' : currentLanguage === 'zh' ? '已切换至中文。' : 'Switched to English.');
+        }
+
+        function applyLanguage() {
+            document.querySelectorAll('[data-en]').forEach(el => {
+                const text = el.getAttribute(`data-${currentLanguage}`);
+                if (text) el.innerText = text;
+            });
+            document.querySelectorAll('[data-en-placeholder]').forEach(el => {
+                const ph = el.getAttribute(`data-${currentLanguage}-placeholder`);
+                if (ph) el.placeholder = ph;
+            });
+            renderCarousel();
+            renderRetailerCatalog();
+            renderRetailerOrders();
+        }
+
+        // --- LOCALSTORAGE PERSISTENCE INITIALIZATION ---
+        let defaultSuppliers = [
+            { id: 'sup1', username: 'rahim_sup', password: 'password123', name: 'Rahim Enterprises', shopNo: 'SHOP-001', location: 'Dhaka, Bangladesh', status: 'Active' },
+            { id: 'sup2', username: 'karim_sup', password: 'password123', name: 'Bengal Footwear Ltd', shopNo: 'SHOP-002', location: 'Chattogram, Bangladesh', status: 'Active' },
+            { id: 'sup3', username: 'hasan_sup', password: 'password123', name: 'Dhaka Leather Craft', shopNo: 'SHOP-003', location: 'Gazipur, Bangladesh', status: 'Active' }
         ];
 
-        let loggedInSupplierId = null;
-
-        // Initial Products Store
-        let products = [
+        let defaultProducts = [
             {
                 id: 'p1',
-                name: 'Men\'s Formal Oxford Leather Shoes',
-                category: 'Shoes',
+                name: 'Oxford Formal Art-101',
+                colour: 'Black',
                 supplierId: 'sup1',
-                supplier: 'Rahim Enterprises',
+                shopNo: 'SHOP-001', // Hidden from Buyer
                 supplierPrice: 1800,
                 platformPrice: 1850,
-                moq: 10,
-                stock: 350,
+                sizeBreakup: { '39': 2, '40': 2, '41': 3, '42': 3, '44': 2, '45': 1 },
+                stock: 13, // Total sum
                 status: 'Approved',
                 image: 'https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&w=600&q=80',
-                desc: 'Full grain genuine cow leather upper, slip-resistant TPR sole. Export packed in branded individual boxes.'
+                desc: 'Pure cow leather with anti-slip rubber sole.'
             },
             {
                 id: 'p2',
-                name: 'Export Quality Cotton Casual Shirts',
-                category: 'Clothing',
+                name: 'Derby Casual Art-205',
+                colour: 'Brown',
                 supplierId: 'sup1',
-                supplier: 'Rahim Enterprises',
-                supplierPrice: 450,
-                platformPrice: 500,
-                moq: 50,
-                stock: 1200,
+                shopNo: 'SHOP-001',
+                supplierPrice: 1550,
+                platformPrice: 1600,
+                sizeBreakup: { '39': 5, '40': 5, '41': 10, '42': 10, '44': 5, '45': 5 },
+                stock: 40,
                 status: 'Approved',
-                image: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=600&q=80',
-                desc: '100% premium cotton, breathable fabric for local retail boutiques and wholesale distribution.'
+                image: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=600&q=80',
+                desc: 'Handcrafted premium finish brown leather shoe.'
             },
             {
                 id: 'p3',
-                name: 'Herbal Radiance Glow Facial Cream (50ml)',
-                category: 'Cosmetics',
+                name: 'Loafer Comfort Art-309',
+                colour: 'Tan',
                 supplierId: 'sup2',
-                supplier: 'Bengal Cosmetics Ltd',
-                supplierPrice: 220,
-                platformPrice: 270,
-                moq: 30,
-                stock: 800,
+                shopNo: 'SHOP-002',
+                supplierPrice: 1400,
+                platformPrice: 1450,
+                sizeBreakup: { '39': 4, '40': 4, '41': 8, '42': 8, '44': 4, '45': 2 },
+                stock: 30,
                 status: 'Approved',
-                image: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=600&q=80',
-                desc: 'FDA approved herbal formulation, long shelf-life with tamper-proof holographic seals.'
-            },
-            {
-                id: 'p4',
-                name: 'Smart Surge Protector Extension Cord (3m)',
-                category: 'Electrical Items',
-                supplierId: 'sup3',
-                supplier: 'Dhaka Electric Co.',
-                supplierPrice: 650,
-                platformPrice: 700,
-                moq: 20,
-                stock: 450,
-                status: 'Approved',
-                image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=600&q=80',
-                desc: 'Fire retardant ABS casing, heavy duty copper wiring with individual safety switches.'
+                image: 'https://images.unsplash.com/photo-1533867617858-e7d97e0afd8b?auto=format&fit=crop&w=600&q=80',
+                desc: 'Soft slip-on loafer with cushioned insole.'
             }
         ];
 
-        // Private Media Vaults (Strictly Isolated per Supplier ID)
-        let supplierMediaVaults = {
-            'sup1': [
-                { id: 'm1', title: 'Rahim Enterprises - Factory Cutting Floor', type: 'photo', url: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80', date: '2026-03-01' },
-                { id: 'm2', title: 'Quality Inspection & Packaging Walkthrough', type: 'video', url: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=600&q=80', date: '2026-03-10' }
-            ],
-            'sup2': [
-                { id: 'm3', title: 'Bengal Cosmetics Sterile Mixing Lab', type: 'photo', url: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80', date: '2026-03-04' }
-            ],
-            'sup3': [
-                { id: 'm4', title: 'Electrical Testing & Copper Wire Assembly', type: 'photo', url: 'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=600&q=80', date: '2026-03-05' }
-            ]
-        };
-
-        let orders = [
+        let defaultOrders = [
             {
                 id: 'ORD-9821',
                 productId: 'p1',
-                productName: 'Men\'s Formal Oxford Leather Shoes',
+                productName: 'Oxford Formal Art-101',
                 retailer: 'Gulshan Fashion Hub',
-                qty: 20,
+                qty: 13,
                 unitPrice: 1850,
-                total: 37000,
+                total: 24050,
                 supplierId: 'sup1',
-                supplier: 'Rahim Enterprises',
+                shopNo: 'SHOP-001', // Hidden Supplier Mapping
                 status: 'Processing',
                 timeline: ['Retailer Order Placed', 'Admin Approved', 'Supplier Confirmed', 'Processing']
-            },
-            {
-                id: 'ORD-9822',
-                productId: 'p3',
-                productName: 'Herbal Radiance Glow Facial Cream (50ml)',
-                retailer: 'Dhanmondi Retail Mart',
-                qty: 60,
-                unitPrice: 270,
-                total: 16200,
-                supplierId: 'sup2',
-                supplier: 'Bengal Cosmetics Ltd',
-                status: 'Shipped',
-                timeline: ['Retailer Order Placed', 'Admin Approved', 'Supplier Confirmed', 'Processing', 'Ready for Dispatch', 'Shipped']
             }
         ];
 
+        let defaultInquiries = [
+            {
+                id: 'INQ-101',
+                productId: 'p1',
+                productName: 'Oxford Formal Art-101',
+                buyer: 'Gulshan Fashion Hub',
+                message: 'I need 100 pairs of Article Art-101 in Black. Please confirm timeline.',
+                shopNo: 'SHOP-001',
+                date: '2026-03-29',
+                status: 'Pending Admin Response'
+            }
+        ];
+
+        let defaultMessages = [
+            { id: 'm1', sender: 'admin', senderName: 'OliGlobal Admin', recipient: 'Gulshan Fashion Hub', text: 'Welcome to OliGlobal! Your bulk order ORD-9821 for Oxford Formal Art-101 is currently processing securely.', time: '10:30 AM', unread: true },
+            { id: 'm2', sender: 'buyer', senderName: 'Gulshan Fashion Hub', recipient: 'admin', text: 'Thank you Admin. Can we get priority dispatch for this lot?', time: '10:35 AM', unread: true }
+        ];
+
+        // Load from localStorage or initialize with defaults
+        let suppliersList = JSON.parse(localStorage.getItem('oliglobal_suppliers')) || defaultSuppliers;
+        let products = JSON.parse(localStorage.getItem('oliglobal_products')) || defaultProducts;
+        let orders = JSON.parse(localStorage.getItem('oliglobal_orders')) || defaultOrders;
+        let inquiries = JSON.parse(localStorage.getItem('oliglobal_inquiries')) || defaultInquiries;
+        let chatMessages = JSON.parse(localStorage.getItem('oliglobal_messages')) || defaultMessages;
+
+        function saveToLocalStorage() {
+            localStorage.setItem('oliglobal_suppliers', JSON.stringify(suppliersList));
+            localStorage.setItem('oliglobal_products', JSON.stringify(products));
+            localStorage.setItem('oliglobal_orders', JSON.stringify(orders));
+            localStorage.setItem('oliglobal_inquiries', JSON.stringify(inquiries));
+            localStorage.setItem('oliglobal_messages', JSON.stringify(chatMessages));
+        }
+
+        let loggedInSupplierId = null; 
+        let loggedInBuyerName = 'Gulshan Fashion Hub';
+        let isAdminLoggedIn = false;
+
         let currentRole = 'retailer';
-        let currentCategoryFilter = 'All';
+        let currentColorFilter = 'All';
         let currentRetailerTab = 'catalog';
         let currentSupplierTab = 'products';
         let currentAdminTab = 'suppliers';
-        let auditSelectedSupplierId = 'sup1';
-        let isAdminLoggedIn = false;
 
-        // Toast Notification Helper
+        // Toggle Top-Right Dropdown
+        function toggleNavDropdown() {
+            const menu = document.getElementById('nav-dropdown-menu');
+            if (menu) menu.classList.toggle('hidden');
+        }
+
+        function closeNavDropdown() {
+            const menu = document.getElementById('nav-dropdown-menu');
+            if (menu) menu.classList.add('hidden');
+        }
+
+        window.addEventListener('click', function(e) {
+            const btn = document.getElementById('nav-menu-btn');
+            const menu = document.getElementById('nav-dropdown-menu');
+            if (btn && menu && !btn.contains(e.target) && !menu.contains(e.target)) {
+                menu.classList.add('hidden');
+            }
+        });
+
+        // Carousel State
+        let currentSlideIndex = 0;
+        const carouselSlides = [
+            {
+                tagEn: "Private B2B Wholesale Marketplace",
+                tagBn: "প্রাইভেট বিটুবি পাইকারি মার্কেটপ্লেস",
+                tagZh: "私密B2B批发市场",
+                titleEn: "Secure Supplier Sourcing in Bangladesh",
+                titleBn: "বাংলাদেশে নিরাপদ সাপ্লায়ার সোর্সিং",
+                titleZh: "孟加拉国安全供应商采购",
+                descEn: "Unified wholesale catalog with hidden supplier identities, verified manufacturers, and guaranteed margin protection.",
+                descBn: "গোপন সাপ্লায়ার আইডি, যাচাইকৃত প্রস্তুতকারক এবং নিশ্চিত মার্জিন সুরক্ষা সহ একত্রিত পাইকারি ক্যাটালগ。",
+                descZh: "具有隐藏供应商身份、经过验证的制造商和保证利润保护的统一批发目录。",
+                image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1600&q=80",
+                icon: "fa-boxes-stacked",
+                badgeColor: "bg-indigo-500/30 text-indigo-200 border-indigo-400/30"
+            },
+            {
+                tagEn: "Anti-Bypass Protection",
+                tagBn: "এন্টি-বাইপাস সুরক্ষা",
+                tagZh: "防绕过保护",
+                titleEn: "Direct Manufacturer Anonymity & Escrow",
+                titleBn: "সরাসরি প্রস্তুতকারকের গোপনীয়তা এবং এসক্রো",
+                titleZh: "直接制造商匿名与托管",
+                descEn: "Buyers and suppliers transact safely inside OliGlobal without bypassing platform controls or exposing direct contact details.",
+                descBn: "বায়ার ও সাপ্লায়াররা প্ল্যাটফর্মের নিয়ন্ত্রণ এড়িয়ে না গিয়ে বা সরাসরি যোগাযোগ প্রকাশ না করে নিরাপদে লেনদেন করে。",
+                descZh: "买家和供应商在OliGlobal内部安全交易，不会绕过平台控制或暴露直接联系方式。",
+                image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=1600&q=80",
+                icon: "fa-shield-halved",
+                badgeColor: "bg-emerald-500/30 text-emerald-200 border-emerald-400/30"
+            }
+        ];
+        let carouselInterval = null;
+
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
+            if (!container) return;
             const toast = document.createElement('div');
             toast.className = `p-4 rounded-xl shadow-lg text-white text-sm font-medium flex items-center space-x-3 transition-all transform translate-y-2 opacity-0 ${type === 'success' ? 'bg-emerald-600' : 'bg-indigo-600'}`;
             toast.innerHTML = `<i class="fa-solid ${type === 'success' ? 'fa-circle-check' : 'fa-info-circle'} text-lg"></i><span>${message}</span>`;
@@ -723,162 +906,324 @@
             }, 3500);
         }
 
-        // Role Switcher
         function setRole(role) {
             if (role === 'admin' && !isAdminLoggedIn) {
                 openAdminLoginModal();
                 return;
             }
+            if (role === 'supplier' && !loggedInSupplierId) {
+                openSupplierPortalModal();
+                return;
+            }
 
             currentRole = role;
-            document.getElementById('view-retailer').classList.add('hidden');
-            document.getElementById('view-supplier').classList.add('hidden');
-            document.getElementById('view-admin').classList.add('hidden');
-
-            ['retailer', 'admin'].forEach(r => {
-                const btn = document.getElementById(`nav-btn-${r}`);
-                if (btn) {
-                    if (r === role) {
-                        btn.className = 'px-3 py-1.5 rounded-lg font-medium transition-colors bg-indigo-600 text-white';
-                    } else {
-                        btn.className = 'px-3 py-1.5 rounded-lg font-medium transition-colors text-slate-300 hover:text-white';
-                    }
-                }
+            ['retailer', 'supplier', 'admin'].forEach(r => {
+                const el = document.getElementById(`view-${r}`);
+                if (el) el.classList.add('hidden');
             });
 
-            // Handle admin active button styling
-            const adminBtn = document.getElementById('nav-btn-admin');
-            if (role === 'admin') {
-                adminBtn.className = 'px-3 py-1.5 rounded-lg font-medium transition-colors bg-slate-900 text-white border border-slate-700';
-            } else {
-                adminBtn.className = 'px-3 py-1.5 rounded-lg font-medium transition-colors text-slate-300 hover:text-white';
-            }
-
-            // Handle supplier nav button state
-            const supNavBtn = document.getElementById('nav-btn-supplier');
-            if (role === 'supplier') {
-                supNavBtn.className = 'px-3 py-1.5 rounded-lg font-medium transition-colors bg-indigo-600 text-white';
-            } else {
-                supNavBtn.className = 'px-3 py-1.5 rounded-lg font-medium transition-colors text-slate-300 hover:text-white';
-            }
-
-            document.getElementById(`view-${role}`).classList.remove('hidden');
+            const target = document.getElementById(`view-${role}`);
+            if (target) target.classList.remove('hidden');
             refreshViews();
         }
 
-        // --- ADMIN AUTHENTICATION ---
-        function openAdminLoginModal() {
-            document.getElementById('modal-admin-login').classList.remove('hidden');
-        }
-
-        function closeAdminLoginModal() {
-            document.getElementById('modal-admin-login').classList.add('hidden');
-        }
-
-        function handleAdminLogin(e) {
-            e.preventDefault();
-            const userInput = document.getElementById('admin-login-user').value.trim();
-            const passInput = document.getElementById('admin-login-pass').value;
-
-            if (userInput === 'admin' && passInput === 'admin123') {
-                isAdminLoggedIn = true;
-                closeAdminLoginModal();
-                setRole('admin');
-                showToast('Welcome to OliGlobal Admin Control Center!');
-            } else {
-                showToast('Invalid Admin credentials. Please use admin / admin123.', 'info');
-            }
-        }
-
         function refreshViews() {
-            renderRetailerCatalog();
-            renderRetailerOrders();
-            if (loggedInSupplierId) {
+            saveToLocalStorage();
+            if (currentRole === 'retailer') {
+                renderRetailerCatalog();
+                renderRetailerOrders();
+                updateUnreadBadges();
+            } else if (currentRole === 'supplier') {
                 renderSupplierDashboard();
+            } else if (currentRole === 'admin') {
+                renderAdminSuppliers();
+                renderAdminProducts();
+                renderAdminInquiries();
+                renderAdminOrders();
+                renderAdminFinances();
+                updateUnreadBadges();
             }
-            renderAdminSuppliers();
-            renderAdminProducts();
-            renderAdminVaultsAudit();
-            renderAdminOrders();
-            renderAdminFinances();
         }
 
-        // --- SUPPLIER AUTHENTICATION ---
-        function openSupplierPortalModal() {
-            document.getElementById('modal-supplier-login').classList.remove('hidden');
+        function updateUnreadBadges() {
+            const unreadCount = chatMessages.filter(m => m.unread && (currentRole === 'retailer' ? m.recipient === loggedInBuyerName : m.recipient === 'admin')).length;
+            const badge = document.getElementById('buyer-unread-badge');
+            if (badge) {
+                if (unreadCount > 0) {
+                    badge.innerText = unreadCount;
+                    badge.classList.remove('hidden');
+                } else {
+                    badge.classList.add('hidden');
+                }
+            }
+
+            const adminBadge = document.getElementById('admin-msg-badge-count');
+            if (adminBadge) {
+                const adminUnread = chatMessages.filter(m => m.unread && m.recipient === 'admin').length;
+                adminBadge.innerText = adminUnread;
+            }
         }
 
-        function closeSupplierPortalModal() {
-            document.getElementById('modal-supplier-login').classList.add('hidden');
+        // --- BUYER & ADMIN MESSAGING / CHAT MODALS ---
+        function openBuyerChatModal() {
+            renderChatMessages();
+            document.getElementById('modal-buyer-chat').classList.remove('hidden');
+            chatMessages.forEach(m => {
+                if (m.recipient === loggedInBuyerName) m.unread = false;
+            });
+            updateUnreadBadges();
+            saveToLocalStorage();
         }
 
+        function closeBuyerChatModal() {
+            document.getElementById('modal-buyer-chat').classList.add('hidden');
+        }
+
+        function renderChatMessages() {
+            const container = document.getElementById('buyer-chat-messages');
+            if (!container) return;
+
+            const relevantMessages = chatMessages.filter(m => m.sender === loggedInBuyerName || m.recipient === loggedInBuyerName || m.sender === 'admin' || m.recipient === 'admin');
+
+            if (relevantMessages.length === 0) {
+                container.innerHTML = `<div class="text-center py-12 text-slate-400 text-xs">No messages yet. Send a message to OliGlobal Admin below!</div>`;
+                return;
+            }
+
+            container.innerHTML = relevantMessages.map(m => {
+                const isMe = m.sender === loggedInBuyerName;
+                return `
+                    <div class="flex flex-col ${isMe ? 'items-end' : 'items-start'}">
+                        <div class="max-w-[80%] rounded-2xl px-4 py-3 text-xs shadow-sm ${isMe ? 'bg-indigo-600 text-white rounded-br-none' : 'bg-white text-slate-800 border border-slate-200 rounded-bl-none'}">
+                            <span class="block font-bold text-[10px] mb-1 opacity-80">${m.senderName}</span>
+                            <p class="leading-relaxed">${m.text}</p>
+                            <span class="block text-[9px] text-right mt-1 opacity-70">${m.time}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function sendBuyerChatMessage(e) {
+            e.preventDefault();
+            const input = document.getElementById('buyer-chat-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            chatMessages.push({
+                id: `m_${Date.now()}`,
+                sender: loggedInBuyerName,
+                senderName: loggedInBuyerName,
+                recipient: 'admin',
+                text: text,
+                time: timeStr,
+                unread: true
+            });
+
+            input.value = '';
+            renderChatMessages();
+            updateUnreadBadges();
+            saveToLocalStorage();
+            showToast('Message sent to Admin successfully!');
+        }
+
+        function openAdminBroadcastModal() {
+            document.getElementById('modal-admin-broadcast').classList.remove('hidden');
+        }
+
+        function closeAdminBroadcastModal() {
+            document.getElementById('modal-admin-broadcast').classList.add('hidden');
+        }
+
+        function submitAdminBroadcast(e) {
+            e.preventDefault();
+            const targetBuyer = document.getElementById('admin-target-buyer').value;
+            const text = document.getElementById('admin-broadcast-msg').value.trim();
+            if (!text) return;
+
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            chatMessages.push({
+                id: `m_${Date.now()}`,
+                sender: 'admin',
+                senderName: 'OliGlobal Admin',
+                recipient: targetBuyer,
+                text: text,
+                time: timeStr,
+                unread: true
+            });
+
+            closeAdminBroadcastModal();
+            document.getElementById('form-admin-broadcast')?.reset?.();
+            showToast(`Message sent to ${targetBuyer} successfully!`);
+            refreshViews();
+        }
+
+        function renderCarousel() {
+            const container = document.getElementById('hero-carousel-container');
+            const dotsContainer = document.getElementById('carousel-dots');
+            if (!container || !dotsContainer) return;
+
+            const slide = carouselSlides[currentSlideIndex];
+            const tagText = currentLanguage === 'bn' ? slide.tagBn : currentLanguage === 'zh' ? slide.tagZh : slide.tagEn;
+            const titleText = currentLanguage === 'bn' ? slide.titleBn : currentLanguage === 'zh' ? slide.titleZh : slide.titleEn;
+            const descText = currentLanguage === 'bn' ? slide.descBn : currentLanguage === 'zh' ? slide.descZh : slide.descEn;
+
+            container.innerHTML = `
+                <div class="absolute inset-0 z-0">
+                    <img src="${slide.image}" alt="${titleText}" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/80 to-slate-900/60"></div>
+                </div>
+                <div class="max-w-3xl relative z-20 px-8 sm:px-12 py-12">
+                    <span class="text-xs px-3 py-1 rounded-full font-semibold uppercase tracking-wider border ${slide.badgeColor}">${tagText}</span>
+                    <h1 class="text-3xl sm:text-4xl font-bold mt-3 text-white">${titleText}</h1>
+                    <p class="text-slate-200 mt-2 text-sm sm:text-base">${descText}</p>
+                </div>
+            `;
+
+            dotsContainer.innerHTML = carouselSlides.map((_, idx) => `
+                <button onclick="goToSlide(${idx})" class="w-2.5 h-2.5 rounded-full transition-all ${idx === currentSlideIndex ? 'bg-white w-6' : 'bg-white/40 hover:bg-white/70'}"></button>
+            `).join('');
+        }
+
+        function nextSlide() {
+            currentSlideIndex = (currentSlideIndex + 1) % carouselSlides.length;
+            renderCarousel();
+            resetCarouselTimer();
+        }
+
+        function prevSlide() {
+            currentSlideIndex = (currentSlideIndex - 1 + carouselSlides.length) % carouselSlides.length;
+            renderCarousel();
+            resetCarouselTimer();
+        }
+
+        function goToSlide(idx) {
+            currentSlideIndex = idx;
+            renderCarousel();
+            resetCarouselTimer();
+        }
+
+        function startCarouselTimer() {
+            carouselInterval = setInterval(() => {
+                currentSlideIndex = (currentSlideIndex + 1) % carouselSlides.length;
+                renderCarousel();
+            }, 6000);
+        }
+
+        function resetCarouselTimer() {
+            clearInterval(carouselInterval);
+            startCarouselTimer();
+        }
+
+        // --- AUTH MODALS ---
+        function openBuyerLoginModal() { document.getElementById('modal-buyer-login').classList.remove('hidden'); }
+        function closeBuyerLoginModal() { document.getElementById('modal-buyer-login').classList.add('hidden'); }
+        function handleBuyerLogin(e) {
+            e.preventDefault();
+            const user = document.getElementById('buyer-login-user').value.trim();
+            loggedInBuyerName = user || 'Gulshan Fashion Hub';
+            closeBuyerLoginModal();
+            setRole('retailer');
+            showToast(`Welcome back, Buyer (${loggedInBuyerName})!`);
+        }
+
+        function openSupplierPortalModal() { document.getElementById('modal-supplier-login').classList.remove('hidden'); }
+        function closeSupplierPortalModal() { document.getElementById('modal-supplier-login').classList.add('hidden'); }
         function handleSupplierLogin(e) {
             e.preventDefault();
-            const userIdInput = document.getElementById('login-userid').value.trim();
+            const usernameInput = document.getElementById('login-username').value.trim();
             const passInput = document.getElementById('login-password').value;
 
-            const found = suppliersList.find(s => s.userId === userIdInput && s.password === passInput);
+            const found = suppliersList.find(s => s.username === usernameInput && s.password === passInput);
             if (found) {
                 if (found.status === 'Suspended') {
-                    showToast('This supplier account has been suspended by Admin.', 'info');
+                    showToast('This supplier account is suspended.', 'info');
                     return;
                 }
                 loggedInSupplierId = found.id;
                 closeSupplierPortalModal();
                 setRole('supplier');
-                showToast(`Welcome back, ${found.name}!`);
+                showToast(`Welcome back, ${found.name} (${found.shopNo})!`);
             } else {
-                showToast('Invalid Supplier User ID or Password. Please check credentials.', 'info');
+                showToast('Invalid Supplier Username or Password.', 'info');
             }
         }
-
         function supplierLogout() {
             loggedInSupplierId = null;
             setRole('retailer');
-            showToast('Logged out from Supplier Portal successfully.');
+            showToast('Logged out from Supplier Portal.');
         }
 
-        // --- RETAILER FUNCTIONS ---
-        function switchRetailerTab(tab) {
-            currentRetailerTab = tab;
-            if (tab === 'catalog') {
-                document.getElementById('retailer-catalog-section').classList.remove('hidden');
-                document.getElementById('retailer-orders-section').classList.add('hidden');
-                document.getElementById('rtab-catalog').className = 'pb-3 border-b-2 border-indigo-600 font-semibold text-indigo-600 text-sm flex items-center space-x-2';
-                document.getElementById('rtab-orders').className = 'pb-3 border-b-2 border-transparent text-slate-500 hover:text-slate-700 font-semibold text-sm flex items-center space-x-2';
+        function openAdminLoginModal() { document.getElementById('modal-admin-login').classList.remove('hidden'); }
+        function closeAdminLoginModal() { document.getElementById('modal-admin-login').classList.add('hidden'); }
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const user = document.getElementById('admin-login-user').value.trim();
+            const pass = document.getElementById('admin-login-pass').value;
+            if (user === 'admin' && pass === 'admin123') {
+                isAdminLoggedIn = true;
+                closeAdminLoginModal();
+                setRole('admin');
+                showToast('Admin Control Center accessed successfully!');
             } else {
-                document.getElementById('retailer-catalog-section').classList.add('hidden');
-                document.getElementById('retailer-orders-section').classList.remove('hidden');
-                document.getElementById('rtab-orders').className = 'pb-3 border-b-2 border-indigo-600 font-semibold text-indigo-600 text-sm flex items-center space-x-2';
-                document.getElementById('rtab-catalog').className = 'pb-3 border-b-2 border-transparent text-slate-500 hover:text-slate-700 font-semibold text-sm flex items-center space-x-2';
+                showToast('Invalid Admin Credentials.', 'info');
             }
         }
 
-        function filterCategory(cat) {
-            currentCategoryFilter = cat;
-            document.querySelectorAll('.cat-btn').forEach(btn => {
-                if (btn.innerText.includes(cat) || (cat === 'All' && btn.innerText.includes('All'))) {
-                    btn.className = 'cat-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 text-white whitespace-nowrap';
+        // --- RETAILER / BUYER FUNCTIONS (SUPPLIER HIDDEN) ---
+        function switchRetailerTab(tab) {
+            currentRetailerTab = tab;
+            const catSec = document.getElementById('retailer-catalog-section');
+            const ordSec = document.getElementById('retailer-orders-section');
+            const tCat = document.getElementById('rtab-catalog');
+            const tOrd = document.getElementById('rtab-orders');
+
+            if (tab === 'catalog') {
+                catSec.classList.remove('hidden');
+                ordSec.classList.add('hidden');
+                tCat.className = 'pb-3 border-b-2 border-indigo-600 font-semibold text-indigo-600 text-sm flex items-center space-x-2';
+                tOrd.className = 'pb-3 border-b-2 border-transparent text-slate-500 hover:text-slate-700 font-semibold text-sm flex items-center space-x-2';
+            } else {
+                catSec.classList.add('hidden');
+                ordSec.classList.remove('hidden');
+                tOrd.className = 'pb-3 border-b-2 border-indigo-600 font-semibold text-indigo-600 text-sm flex items-center space-x-2';
+                tCat.className = 'pb-3 border-b-2 border-transparent text-slate-500 hover:text-slate-700 font-semibold text-sm flex items-center space-x-2';
+            }
+        }
+
+        function filterColor(col) {
+            currentColorFilter = col;
+            document.querySelectorAll('.col-btn').forEach(btn => {
+                if (btn.innerText.includes(col) || (col === 'All' && btn.innerText.includes('All'))) {
+                    btn.className = 'col-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 text-white whitespace-nowrap';
                 } else {
-                    btn.className = 'cat-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap';
+                    btn.className = 'col-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap';
                 }
             });
             renderRetailerCatalog();
         }
 
         function renderRetailerCatalog() {
-            const grid = document.getElementById('retailer-product-grid');
-            const search = document.getElementById('retailer-search').value.toLowerCase();
-            
+            const grid = document.getElementById('retailer-catalog-section');
+            const searchInput = document.getElementById('retailer-search');
+            if (!grid) return;
+
+            const search = searchInput ? searchInput.value.toLowerCase() : '';
             const approved = products.filter(p => p.status === 'Approved');
             const filtered = approved.filter(p => {
-                const matchesCat = currentCategoryFilter === 'All' || p.category === currentCategoryFilter;
-                const matchesSearch = p.name.toLowerCase().includes(search) || p.category.toLowerCase().includes(search);
-                return matchesCat && matchesSearch;
+                const matchesCol = currentColorFilter === 'All' || p.colour === currentColorFilter;
+                const matchesSearch = p.name.toLowerCase().includes(search) || p.colour.toLowerCase().includes(search);
+                return matchesCol && matchesSearch;
             });
 
             if (filtered.length === 0) {
-                grid.innerHTML = `<div class="col-span-full py-12 text-center text-slate-400 bg-white rounded-xl border border-slate-200"><i class="fa-solid fa-box-open text-4xl mb-2"></i><p>No approved wholesale products found.</p></div>`;
+                grid.innerHTML = `<div class="col-span-full py-12 text-center text-slate-400 bg-white rounded-xl border border-slate-200"><i class="fa-solid fa-box-open text-4xl mb-2"></i><p>No wholesale articles found.</p></div>`;
                 return;
             }
 
@@ -887,27 +1232,36 @@
                     <div>
                         <div class="relative h-48 bg-slate-100 overflow-hidden">
                             <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x400/e2e8f0/475569?text=OliGlobal'">
-                            <span class="absolute top-3 left-3 bg-indigo-600/90 text-white text-[10px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider">${p.category}</span>
+                            <span class="absolute top-3 left-3 bg-indigo-600/90 text-white text-[10px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider">${p.colour}</span>
+                            <span class="absolute top-3 right-3 bg-slate-900/80 text-white text-[10px] font-medium px-2 py-0.5 rounded">Total: ${p.stock} Pairs</span>
                         </div>
                         <div class="p-5">
                             <h3 class="font-bold text-slate-900 text-base leading-snug">${p.name}</h3>
                             <p class="text-xs text-slate-500 mt-1 line-clamp-2">${p.desc}</p>
                             
+                            <!-- Size Breakdown Badge List -->
+                            <div class="mt-3 flex flex-wrap gap-1">
+                                ${Object.entries(p.sizeBreakup || {}).map(([sz, q]) => `<span class="bg-slate-100 text-slate-700 text-[10px] px-2 py-0.5 rounded font-mono">Sz ${sz}: <strong>${q} pr</strong></span>`).join('')}
+                            </div>
+
                             <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
                                 <div>
                                     <span class="text-xs text-slate-400 block">Platform Selling Price</span>
                                     <span class="text-lg font-bold text-indigo-600">৳${p.platformPrice}</span>
                                 </div>
                                 <div class="text-right">
-                                    <span class="text-xs text-slate-400 block">Min. Order (MOQ)</span>
-                                    <span class="font-semibold text-slate-700 text-sm">${p.moq} units</span>
+                                    <span class="text-xs text-slate-400 block">Lot Quantity</span>
+                                    <span class="font-semibold text-slate-700 text-sm">${p.stock} Pairs</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="p-5 pt-0">
-                        <button onclick="openOrderModal('${p.id}')" class="w-full bg-slate-900 hover:bg-indigo-600 text-white font-medium py-2.5 rounded-xl text-sm transition-colors flex items-center justify-center space-x-2">
-                            <i class="fa-solid fa-cart-plus"></i> <span>Place Bulk Order</span>
+                    <div class="p-5 pt-0 flex gap-2">
+                        <button onclick="openOrderModal('${p.id}')" class="flex-1 bg-slate-900 hover:bg-indigo-600 text-white font-medium py-2.5 rounded-xl text-xs transition-colors flex items-center justify-center space-x-1.5">
+                            <i class="fa-solid fa-cart-plus"></i> <span>Bulk Order Lot</span>
+                        </button>
+                        <button onclick="openInquiryModal('${p.id}')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-medium px-3 py-2.5 rounded-xl text-xs transition-colors border border-indigo-200" title="Ask Admin About This Article">
+                            <i class="fa-solid fa-comments"></i> <span class="hidden sm:inline">Ask Admin</span>
                         </button>
                     </div>
                 </div>
@@ -917,80 +1271,117 @@
         function openOrderModal(productId) {
             const p = products.find(item => item.id === productId);
             if (!p) return;
-
             const modalContent = document.getElementById('order-modal-content');
+            if (!modalContent) return;
+
             modalContent.innerHTML = `
                 <div class="flex items-center space-x-3 bg-slate-50 p-3 rounded-xl border border-slate-100">
-                    <img src="${p.image}" class="w-16 h-16 object-cover rounded-lg" onerror="this.src='https://placehold.co/100x100'">
+                    <img src="${p.image}" class="w-16 h-16 object-cover rounded-lg">
                     <div>
-                        <h4 class="font-bold text-slate-900 text-sm">${p.name}</h4>
-                        <p class="text-xs text-indigo-600 font-semibold mt-0.5">৳${p.platformPrice} per unit (MOQ: ${p.moq})</p>
+                        <h4 class="font-bold text-slate-900 text-sm">${p.name} (${p.colour})</h4>
+                        <p class="text-xs text-indigo-600 font-semibold mt-0.5">৳${p.platformPrice} per pair (Lot Qty: ${p.stock} pairs)</p>
                     </div>
                 </div>
                 <div class="space-y-3 pt-2">
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Order Quantity (Units)</label>
-                        <input type="number" id="order-qty" min="${p.moq}" value="${p.moq}" oninput="calcOrderTotal(${p.platformPrice})" class="w-full px-3.5 py-2 border border-slate-200 rounded-lg text-sm font-bold focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                        <p class="text-[11px] text-slate-400 mt-1">Stock available: ${p.stock} units</p>
+                    <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs">
+                        <span class="font-bold block text-slate-700 mb-1">Size Breakdown included in this lot:</span>
+                        <div class="flex flex-wrap gap-1">
+                            ${Object.entries(p.sizeBreakup || {}).map(([sz, q]) => `<span class="bg-white border border-slate-200 px-2 py-0.5 rounded font-mono">Sz ${sz}: ${q} pairs</span>`).join('')}
+                        </div>
                     </div>
                     <div class="bg-indigo-50 p-3 rounded-xl border border-indigo-100 flex justify-between items-center">
-                        <span class="text-xs font-semibold text-indigo-900">Total Platform Price:</span>
-                        <span class="text-lg font-bold text-indigo-600" id="order-total-display">৳${p.platformPrice * p.moq}</span>
+                        <span class="text-xs font-semibold text-indigo-900">Total Lot Price (${p.stock} Pairs):</span>
+                        <span class="text-lg font-bold text-indigo-600">৳${p.platformPrice * p.stock}</span>
                     </div>
                     <div class="bg-amber-50 p-3 rounded-xl border border-amber-200 text-amber-800 text-xs flex items-start space-x-2">
                         <i class="fa-solid fa-shield-halved mt-0.5"></i>
-                        <span>Anti-Bypass Notice: Payment and communication are securely handled via OliGlobal platform. Direct supplier contact is restricted.</span>
+                        <span>Supplier identity is fully concealed by platform. Order fulfillment is managed securely by OliGlobal.</span>
                     </div>
                 </div>
                 <div class="pt-4 flex justify-end space-x-3">
                     <button onclick="closeOrderModal()" class="px-4 py-2 border border-slate-200 text-slate-600 rounded-lg text-sm font-medium">Cancel</button>
-                    <button onclick="submitOrder('${p.id}')" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium shadow-sm">Confirm Order Placement</button>
+                    <button onclick="submitOrder('${p.id}')" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium shadow-sm">Confirm Bulk Lot Order</button>
                 </div>
             `;
             document.getElementById('modal-order').classList.remove('hidden');
         }
 
-        function calcOrderTotal(price) {
-            const qty = parseInt(document.getElementById('order-qty').value) || 0;
-            document.getElementById('order-total-display').innerText = `৳${qty * price}`;
-        }
-
-        function closeOrderModal() {
-            document.getElementById('modal-order').classList.add('hidden');
-        }
+        function closeOrderModal() { document.getElementById('modal-order').classList.add('hidden'); }
 
         function submitOrder(productId) {
             const p = products.find(item => item.id === productId);
-            const qty = parseInt(document.getElementById('order-qty').value);
-            if (qty < p.moq) {
-                showToast(`Minimum order quantity is ${p.moq} units.`, 'info');
-                return;
-            }
+            if (!p) return;
 
             const newOrder = {
                 id: `ORD-${Math.floor(1000 + Math.random() * 9000)}`,
                 productId: p.id,
-                productName: p.name,
-                retailer: 'Gulshan Fashion Hub (You)',
-                qty: qty,
+                productName: `${p.name} (${p.colour})`,
+                retailer: loggedInBuyerName,
+                qty: p.stock,
                 unitPrice: p.platformPrice,
-                total: qty * p.platformPrice,
+                total: p.stock * p.platformPrice,
                 supplierId: p.supplierId,
-                supplier: p.supplier,
+                shopNo: p.shopNo, // Backend mapped
                 status: 'Pending Approval',
                 timeline: ['Retailer Order Placed']
             };
 
             orders.unshift(newOrder);
             closeOrderModal();
-            showToast('Bulk order successfully placed into fulfillment pipeline!');
+            showToast('Bulk article order placed securely into fulfillment pipeline!');
             refreshViews();
             switchRetailerTab('orders');
         }
 
+        function openInquiryModal(productId) {
+            const p = products.find(item => item.id === productId);
+            if (!p) return;
+            document.getElementById('inq-product-id').value = p.id;
+            document.getElementById('inq-product-name').innerText = `${p.name} (${p.colour})`;
+            document.getElementById('modal-inquiry').classList.remove('hidden');
+        }
+
+        function closeInquiryModal() { document.getElementById('modal-inquiry').classList.add('hidden'); }
+
+        function submitInquiry(e) {
+            e.preventDefault();
+            const prodId = document.getElementById('inq-product-id').value;
+            const p = products.find(item => item.id === prodId);
+            const msg = document.getElementById('inq-message').value;
+
+            if (!p) return;
+
+            inquiries.unshift({
+                id: `INQ-${Math.floor(100 + Math.random() * 900)}`,
+                productId: p.id,
+                productName: `${p.name} (${p.colour})`,
+                buyer: loggedInBuyerName,
+                message: msg,
+                shopNo: p.shopNo,
+                date: new Date().toISOString().split('T')[0],
+                status: 'Pending Admin Response'
+            });
+
+            chatMessages.push({
+                id: `m_${Date.now()}`,
+                sender: loggedInBuyerName,
+                senderName: loggedInBuyerName,
+                recipient: 'admin',
+                text: `Inquiry on ${p.name}: ${msg}`,
+                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                unread: true
+            });
+
+            closeInquiryModal();
+            showToast('Your inquiry has been sent to OliGlobal Admin successfully!');
+            refreshViews();
+        }
+
         function renderRetailerOrders() {
             const list = document.getElementById('retailer-orders-list');
-            document.getElementById('retailer-order-count').innerText = orders.length;
+            const countEl = document.getElementById('retailer-order-count');
+            if (countEl) countEl.innerText = orders.length;
+            if (!list) return;
 
             if (orders.length === 0) {
                 list.innerHTML = `<div class="p-8 text-center text-slate-400">No active or past orders.</div>`;
@@ -1005,32 +1396,39 @@
                             <span class="bg-indigo-100 text-indigo-800 text-[10px] px-2.5 py-0.5 rounded-full font-semibold">${o.status}</span>
                         </div>
                         <h4 class="font-semibold text-slate-800 mt-1">${o.productName}</h4>
-                        <p class="text-xs text-slate-500 mt-0.5">Quantity: <strong class="text-slate-700">${o.qty} units</strong> • Supplier: <span class="text-indigo-600 font-medium">${o.supplier}</span></p>
-                        <div class="flex items-center space-x-2 mt-3">
+                        <p class="text-xs text-slate-500 mt-0.5">Total Quantity: <strong class="text-slate-700">${o.qty} pairs</strong> • Fulfilled by: <span class="text-indigo-600 font-medium">OliGlobal Managed Hub</span></p>
+                        <div class="flex items-center space-x-2 mt-3 flex-wrap gap-y-1">
                             ${o.timeline.map(step => `<span class="bg-slate-100 text-slate-600 text-[10px] px-2 py-0.5 rounded font-medium"><i class="fa-solid fa-check text-emerald-600 mr-1"></i>${step}</span>`).join('')}
                         </div>
                     </div>
-                    <div class="text-right">
-                        <span class="text-xs text-slate-400 block">Total Amount</span>
-                        <span class="text-lg font-bold text-slate-900">৳${o.total}</span>
-                        <span class="block text-[10px] text-emerald-600 font-medium mt-1"><i class="fa-solid fa-shield-check"></i> Escrow Secured</span>
+                    <div class="text-right flex items-center space-x-3">
+                        <div>
+                            <span class="text-xs text-slate-400 block">Total Amount</span>
+                            <span class="text-lg font-bold text-slate-900">৳${o.total}</span>
+                            <span class="block text-[10px] text-emerald-600 font-medium mt-1"><i class="fa-solid fa-shield-check"></i> Escrow Secured</span>
+                        </div>
+                        <button onclick="openBuyerChatModal()" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 p-2.5 rounded-xl border border-indigo-200 text-xs font-semibold" title="Message Admin About Order">
+                            <i class="fa-solid fa-comments"></i>
+                        </button>
                     </div>
                 </div>
             `).join('');
         }
 
-        // --- SUPPLIER FUNCTIONS (INDIVIDUAL SECURE DASHBOARD) ---
+        // --- SUPPLIER PORTAL FUNCTIONS (INDIVIDUAL & ISOLATED) ---
         function switchSupplierTab(tab) {
             currentSupplierTab = tab;
-            ['products', 'media', 'orders'].forEach(t => {
+            ['products', 'orders'].forEach(t => {
                 const sec = document.getElementById(`supplier-${t}-section`);
                 const btn = document.getElementById(`stab-${t}`);
-                if (t === tab) {
-                    sec.classList.remove('hidden');
-                    btn.className = 'pb-3 border-b-2 border-indigo-600 font-semibold text-indigo-600 text-sm whitespace-nowrap flex items-center space-x-2';
-                } else {
-                    sec.classList.add('hidden');
-                    btn.className = 'pb-3 border-b-2 border-transparent text-slate-500 hover:text-slate-700 font-semibold text-sm whitespace-nowrap flex items-center space-x-2';
+                if (sec && btn) {
+                    if (t === tab) {
+                        sec.classList.remove('hidden');
+                        btn.className = 'pb-3 border-b-2 border-indigo-600 font-semibold text-indigo-600 text-sm whitespace-nowrap flex items-center space-x-2';
+                    } else {
+                        sec.classList.add('hidden');
+                        btn.className = 'pb-3 border-b-2 border-transparent text-slate-500 hover:text-slate-700 font-semibold text-sm whitespace-nowrap flex items-center space-x-2';
+                    }
                 }
             });
         }
@@ -1040,96 +1438,137 @@
             const supObj = suppliersList.find(s => s.id === loggedInSupplierId);
             if (!supObj) return;
 
-            document.getElementById('sup-header-name').innerText = `${supObj.name} Dashboard`;
-            document.getElementById('sup-login-badge').innerText = `User ID: ${supObj.userId}`;
+            document.getElementById('sup-header-name').innerText = `${supObj.name} Portal`;
+            document.getElementById('sup-login-badge').innerText = `Shop No: ${supObj.shopNo}`;
+
+            const myProds = products.filter(p => p.supplierId === loggedInSupplierId);
+            document.getElementById('sup-stat-products').innerText = myProds.length;
+            document.getElementById('sup-stat-pics').innerText = myProds.length;
+
+            const myOrders = orders.filter(o => o.supplierId === loggedInSupplierId);
+            document.getElementById('sup-stat-orders').innerText = myOrders.length;
+
+            const revenue = myOrders.reduce((acc, curr) => acc + (curr.qty * (products.find(p=>p.id===curr.productId)?.supplierPrice || 0)), 0);
+            document.getElementById('sup-stat-revenue').innerText = `৳${revenue}`;
 
             renderSupplierProducts();
-            renderSupplierMediaVault();
             renderSupplierOrders();
         }
 
         function openAddProductModal() {
+            const container = document.getElementById('custom-sizes-container');
+            if (container) {
+                container.innerHTML = '';
+                const defaultSizes = [
+                    { size: '39', qty: 2 },
+                    { size: '40', qty: 2 },
+                    { size: '41', qty: 3 },
+                    { size: '42', qty: 3 },
+                    { size: '44', qty: 2 },
+                    { size: '45', qty: 1 }
+                ];
+                defaultSizes.forEach(item => {
+                    addCustomSizeField(item.size, item.qty);
+                });
+            }
             document.getElementById('modal-add-product').classList.remove('hidden');
         }
-        function closeAddProductModal() {
-            document.getElementById('modal-add-product').classList.add('hidden');
+
+        function closeAddProductModal() { document.getElementById('modal-add-product').classList.add('hidden'); }
+
+        function addCustomSizeField(sizeVal = '', qtyVal = '1') {
+            const container = document.getElementById('custom-sizes-container');
+            if (!container) return;
+            const div = document.createElement('div');
+            div.className = 'flex items-center space-x-2 bg-white p-2.5 rounded-xl border border-slate-200 shadow-sm';
+            div.innerHTML = `
+                <div class="flex items-center space-x-1 w-1/2">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase">Size:</span>
+                    <input type="text" value="${sizeVal}" class="size-label-input w-full px-2.5 py-1 text-xs font-bold text-slate-800 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500" placeholder="e.g. 39 or UK-8">
+                </div>
+                <div class="flex items-center space-x-1 w-1/2">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase">Pairs:</span>
+                    <input type="number" min="0" value="${qtyVal}" oninput="calcTotalQty()" class="size-qty-input w-full px-2.5 py-1 text-xs font-bold text-indigo-600 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500" placeholder="Qty">
+                </div>
+                <button type="button" onclick="this.parentElement.remove(); calcTotalQty();" class="text-slate-400 hover:text-rose-600 px-2 py-1 transition-colors"><i class="fa-solid fa-xmark"></i></button>
+            `;
+            container.appendChild(div);
+            calcTotalQty();
         }
 
-        function openUploadMediaModal() {
-            document.getElementById('modal-upload-media').classList.remove('hidden');
-        }
-        function closeUploadMediaModal() {
-            document.getElementById('modal-upload-media').classList.add('hidden');
+        function calcTotalQty() {
+            let total = 0;
+            document.querySelectorAll('.size-qty-input').forEach(input => {
+                total += parseInt(input.value) || 0;
+            });
+            const sumEl = document.getElementById('total-sum-qty');
+            if (sumEl) sumEl.innerText = `${total} Pairs`;
         }
 
         function handleProductUpload(e) {
             e.preventDefault();
-            const name = document.getElementById('prod-name').value;
-            const category = document.getElementById('prod-category').value;
-            const price = parseFloat(document.getElementById('prod-price').value);
-            const moq = parseInt(document.getElementById('prod-moq').value);
-            const stock = parseInt(document.getElementById('prod-stock').value);
-            const image = document.getElementById('prod-image').value;
-            const desc = document.getElementById('prod-desc').value;
+            const name = document.getElementById('art-name').value;
+            const colour = document.getElementById('art-colour').value;
+            const price = parseFloat(document.getElementById('art-price').value);
+            const desc = document.getElementById('art-desc').value;
+            const photoInput = document.getElementById('art-photo');
+            
+            let photoUrl = 'https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=600&q=80';
+            if (photoInput.files && photoInput.files[0]) {
+                photoUrl = URL.createObjectURL(photoInput.files[0]);
+            }
+            
+            const sizeBreakup = {};
+            const labelInputs = document.querySelectorAll('.size-label-input');
+            const qtyInputs = document.querySelectorAll('.size-qty-input');
+            
+            for (let i = 0; i < labelInputs.length; i++) {
+                const label = labelInputs[i].value.trim() || `Size ${i+1}`;
+                const qty = parseInt(qtyInputs[i].value) || 0;
+                if (qty > 0) {
+                    sizeBreakup[label] = qty;
+                }
+            }
+
+            const totalStock = Object.values(sizeBreakup).reduce((a, b) => a + b, 0);
+
+            if (totalStock <= 0) {
+                showToast('Please enter pair quantity for at least one size.', 'info');
+                return;
+            }
 
             const supObj = suppliersList.find(s => s.id === loggedInSupplierId);
+            if (!supObj) return;
 
             const newProduct = {
                 id: `p${products.length + 1}`,
                 name,
-                category,
+                colour,
                 supplierId: supObj.id,
-                supplier: supObj.name,
+                shopNo: supObj.shopNo,
                 supplierPrice: price,
                 platformPrice: price + 50,
-                moq,
-                stock,
+                sizeBreakup,
+                stock: totalStock,
                 status: 'Pending',
-                image,
+                image: photoUrl,
                 desc
             };
 
             products.push(newProduct);
             closeAddProductModal();
             document.getElementById('form-add-product').reset();
-            showToast('Product uploaded successfully and sent for Admin review!');
-            refreshViews();
-        }
-
-        function handleMediaUpload(e) {
-            e.preventDefault();
-            const title = document.getElementById('media-title').value;
-            const type = document.getElementById('media-type').value;
-            const url = document.getElementById('media-url').value;
-
-            if (!supplierMediaVaults[loggedInSupplierId]) {
-                supplierMediaVaults[loggedInSupplierId] = [];
-            }
-
-            supplierMediaVaults[loggedInSupplierId].unshift({
-                id: `m_${Date.now()}`,
-                title,
-                type,
-                url,
-                date: new Date().toISOString().split('T')[0]
-            });
-
-            closeUploadMediaModal();
-            document.getElementById('form-upload-media').reset();
-            showToast('Media asset securely saved to your private vault!');
+            showToast('Article uploaded successfully with customized size breakdown linked to your Shop ID!');
             refreshViews();
         }
 
         function renderSupplierProducts() {
             const myProds = products.filter(p => p.supplierId === loggedInSupplierId);
-            document.getElementById('sup-stat-products').innerText = myProds.filter(p => p.status === 'Approved').length;
-            
-            const vaultItems = supplierMediaVaults[loggedInSupplierId] || [];
-            document.getElementById('sup-stat-media').innerText = vaultItems.length;
-
             const tbody = document.getElementById('supplier-products-table');
+            if (!tbody) return;
+
             if (myProds.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-400">No products uploaded under your supplier profile yet.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-400">No articles uploaded under your shop profile yet.</td></tr>`;
                 return;
             }
 
@@ -1139,12 +1578,17 @@
                         <img src="${p.image}" class="w-12 h-12 object-cover rounded-lg" onerror="this.src='https://placehold.co/100x100'">
                         <div>
                             <span class="font-bold text-slate-900 block">${p.name}</span>
-                            <span class="text-xs text-slate-400">ID: ${p.id}</span>
+                            <span class="text-xs text-slate-400 truncate max-w-xs block">${p.desc}</span>
                         </div>
                     </td>
-                    <td class="p-4 text-slate-600">${p.category}</td>
-                    <td class="p-4 font-bold text-emerald-700">৳${p.supplierPrice} <span class="text-[10px] text-slate-400 block font-normal">Your Base Price</span></td>
-                    <td class="p-4 text-slate-700">Stock: ${p.stock} <span class="text-xs text-slate-400 block">MOQ: ${p.moq}</span></td>
+                    <td class="p-4"><span class="bg-slate-100 px-2.5 py-1 rounded text-xs font-semibold text-slate-700">${p.colour}</span></td>
+                    <td class="p-4 font-bold text-emerald-700">৳${p.supplierPrice}</td>
+                    <td class="p-4 text-slate-700 text-xs">
+                        <div class="flex flex-wrap gap-1 mb-1">
+                            ${Object.entries(p.sizeBreakup || {}).map(([sz, q]) => `<span class="bg-indigo-50 text-indigo-700 px-1.5 py-0.5 rounded font-mono">Sz ${sz}:${q}</span>`).join('')}
+                        </div>
+                        <strong>Total: ${p.stock} Pairs</strong>
+                    </td>
                     <td class="p-4">
                         <span class="px-2.5 py-1 rounded-full text-xs font-semibold ${p.status === 'Approved' ? 'bg-emerald-100 text-emerald-800' : p.status === 'Pending' ? 'bg-amber-100 text-amber-800' : 'bg-rose-100 text-rose-800'}">${p.status}</span>
                     </td>
@@ -1155,59 +1599,19 @@
             `).join('');
         }
 
-        function renderSupplierMediaVault() {
-            const grid = document.getElementById('supplier-media-grid');
-            const vaultItems = supplierMediaVaults[loggedInSupplierId] || [];
-
-            if (vaultItems.length === 0) {
-                grid.innerHTML = `<div class="col-span-full py-12 text-center text-slate-400 bg-white rounded-xl border border-slate-200"><i class="fa-solid fa-photo-film text-4xl mb-2"></i><p>No private pictures or videos uploaded in your vault yet.</p></div>`;
-                return;
-            }
-
-            grid.innerHTML = vaultItems.map(m => `
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col justify-between">
-                    <div class="relative h-48 bg-slate-100 overflow-hidden">
-                        <img src="${m.url}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x400/e2e8f0/475569?text=OliGlobal+Media'">
-                        <span class="absolute top-3 left-3 bg-slate-900/80 text-white text-[10px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider">
-                            <i class="fa-solid ${m.type === 'video' ? 'fa-video text-rose-400' : 'fa-camera text-emerald-400'} mr-1"></i> ${m.type}
-                        </span>
-                    </div>
-                    <div class="p-4">
-                        <h4 class="font-bold text-slate-900 text-sm">${m.title}</h4>
-                        <p class="text-xs text-slate-400 mt-1">Uploaded on: ${m.date}</p>
-                    </div>
-                    <div class="p-4 pt-0 flex justify-between items-center text-xs border-t border-slate-100 pt-3">
-                        <span class="text-emerald-700 font-medium"><i class="fa-solid fa-lock mr-1"></i> Restricted Vault (Only you & Admin)</span>
-                        <button onclick="deleteMediaAsset('${loggedInSupplierId}', '${m.id}')" class="text-slate-400 hover:text-rose-600"><i class="fa-solid fa-trash"></i></button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
         function deleteProduct(id) {
             products = products.filter(p => p.id !== id);
-            showToast('Product deleted from inventory.');
+            showToast('Article removed from inventory.');
             refreshViews();
-        }
-
-        function deleteMediaAsset(supId, mediaId) {
-            if (supplierMediaVaults[supId]) {
-                supplierMediaVaults[supId] = supplierMediaVaults[supId].filter(m => m.id !== mediaId);
-                showToast('Media asset removed from private vault.');
-                refreshViews();
-            }
         }
 
         function renderSupplierOrders() {
             const myOrders = orders.filter(o => o.supplierId === loggedInSupplierId);
-            document.getElementById('sup-stat-orders').innerText = myOrders.length;
-            
-            const revenue = myOrders.reduce((acc, curr) => acc + (curr.qty * (products.find(p=>p.id===curr.productId)?.supplierPrice || 0)), 0);
-            document.getElementById('sup-stat-revenue').innerText = `৳${revenue}`;
-
             const list = document.getElementById('supplier-orders-list');
+            if (!list) return;
+
             if (myOrders.length === 0) {
-                list.innerHTML = `<div class="p-8 text-center text-slate-400">No orders assigned for your account yet.</div>`;
+                list.innerHTML = `<div class="p-8 text-center text-slate-400">No assigned orders yet. (Buyer identity is hidden for privacy).</div>`;
                 return;
             }
 
@@ -1219,7 +1623,7 @@
                             <span class="bg-indigo-100 text-indigo-800 text-[10px] px-2.5 py-0.5 rounded-full font-semibold">${o.status}</span>
                         </div>
                         <h4 class="font-semibold text-slate-800 mt-1">${o.productName}</h4>
-                        <p class="text-xs text-slate-500 mt-0.5">Ordered Qty: <strong class="text-slate-700">${o.qty} units</strong> • Retailer: <span class="text-slate-700 font-medium">${o.retailer}</span></p>
+                        <p class="text-xs text-slate-500 mt-0.5">Assigned Qty: <strong class="text-slate-700">${o.qty} pairs</strong> • Buyer: <span class="text-slate-400 italic">Anonymous Retailer (Platform Managed)</span></p>
                     </div>
                     <div class="flex items-center space-x-3">
                         <div class="text-right mr-4">
@@ -1246,13 +1650,13 @@
             }
         }
 
-        // --- ADMIN FUNCTIONS ---
+        // --- ADMIN CONTROL CENTER FUNCTIONS ---
         function switchAdminTab(tab) {
             currentAdminTab = tab;
-            ['suppliers', 'products', 'vaults', 'orders', 'finances'].forEach(t => {
+            ['suppliers', 'products', 'inquiries', 'orders', 'finances'].forEach(t => {
                 const sec = document.getElementById(`admin-${t}-section`);
                 const btn = document.getElementById(`atab-${t}`);
-                if (btn) {
+                if (sec && btn) {
                     if (t === tab) {
                         sec.classList.remove('hidden');
                         btn.className = 'pb-3 border-b-2 border-indigo-600 font-semibold text-indigo-600 text-sm whitespace-nowrap flex items-center space-x-2';
@@ -1264,66 +1668,64 @@
             });
         }
 
-        function openCreateSupplierModal() {
-            document.getElementById('modal-create-supplier').classList.remove('hidden');
-        }
-        function closeCreateSupplierModal() {
-            document.getElementById('modal-create-supplier').classList.add('hidden');
-        }
+        function openCreateSupplierModal() { document.getElementById('modal-create-supplier').classList.remove('hidden'); }
+        function closeCreateSupplierModal() { document.getElementById('modal-create-supplier').classList.add('hidden'); }
 
         function handleCreateSupplier(e) {
             e.preventDefault();
             const name = document.getElementById('newsup-name').value;
-            const userId = document.getElementById('newsup-userid').value.trim();
+            const shopNo = document.getElementById('newsup-shopid').value.trim();
+            const username = document.getElementById('newsup-username').value.trim();
             const password = document.getElementById('newsup-pass').value;
             const location = document.getElementById('newsup-location').value;
-            const tradeLicense = document.getElementById('newsup-license').value;
 
-            if (suppliersList.some(s => s.userId === userId)) {
-                showToast('User ID already exists. Please choose a unique User ID.', 'info');
+            if (suppliersList.some(s => s.shopNo === shopNo)) {
+                showToast('Shop No. already exists. Please use a unique Shop No.', 'info');
                 return;
             }
 
             const newSup = {
                 id: `sup${suppliersList.length + 1}`,
-                userId,
+                username,
                 password,
                 name,
-                code: `SUP-${Math.floor(1000 + Math.random() * 9000)}`,
+                shopNo,
                 location,
-                tradeLicense,
                 status: 'Active'
             };
 
             suppliersList.push(newSup);
-            supplierMediaVaults[newSup.id] = [];
             closeCreateSupplierModal();
             document.getElementById('form-create-supplier').reset();
-            showToast(`Supplier account created successfully! User ID: ${userId}`);
+            showToast(`Supplier profile created! Hidden Shop ID: ${shopNo}`);
             refreshViews();
         }
 
         function renderAdminSuppliers() {
             const tbody = document.getElementById('admin-suppliers-table');
-            tbody.innerHTML = suppliersList.map(s => `
-                <tr class="hover:bg-slate-50 transition-colors">
-                    <td class="p-4">
-                        <span class="font-bold text-slate-900 block">${s.name}</span>
-                        <span class="text-xs text-slate-500">${s.location} • Code: ${s.code}</span>
-                    </td>
-                    <td class="p-4 font-mono font-bold text-indigo-600">${s.userId}</td>
-                    <td class="p-4 font-mono text-slate-600">${s.password}</td>
-                    <td class="p-4 text-xs text-slate-600">${s.tradeLicense}</td>
-                    <td class="p-4">
-                        <span class="px-2.5 py-1 rounded-full text-xs font-semibold ${s.status === 'Active' ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">${s.status}</span>
-                    </td>
-                    <td class="p-4 text-right space-x-2">
-                        <button onclick="toggleSupplierStatus('${s.id}')" class="text-xs px-2.5 py-1 rounded border border-slate-200 text-slate-600 hover:bg-slate-100 font-medium">
-                            ${s.status === 'Active' ? 'Suspend' : 'Activate'}
-                        </button>
-                    </td>
-                </tr>
-            `).join('');
+            if (!tbody) return;
+            tbody.innerHTML = suppliersList.map(s => {
+                const artCount = products.filter(p => p.supplierId === s.id).length;
+                return `
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="p-4">
+                            <span class="font-bold text-slate-900 block">${s.name}</span>
+                            <span class="text-xs text-slate-500">${s.location}</span>
+                        </td>
+                        <td class="p-4 font-mono font-bold text-indigo-600">${s.shopNo} <span class="text-[10px] bg-indigo-100 text-indigo-800 px-1.5 py-0.5 rounded font-normal block">Hidden from Buyer</span></td>
+                        <td class="p-4 text-xs text-slate-700"><strong>User:</strong> ${s.username}<br><strong>Pass:</strong> ${s.password}</td>
+                        <td class="p-4 text-slate-700 font-semibold">${artCount} articles</td>
+                        <td class="p-4">
+                            <span class="px-2.5 py-1 rounded-full text-xs font-semibold ${s.status === 'Active' ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">${s.status}</span>
+                        </td>
+                        <td class="p-4 text-right">
+                            <button onclick="toggleSupplierStatus('${s.id}')" class="text-xs px-2.5 py-1 rounded border border-slate-200 text-slate-600 hover:bg-slate-100 font-medium">
+                                ${s.status === 'Active' ? 'Suspend' : 'Activate'}
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
         }
 
         function toggleSupplierStatus(supId) {
@@ -1337,110 +1739,120 @@
 
         function renderAdminProducts() {
             const tbody = document.getElementById('admin-products-table');
-            tbody.innerHTML = products.map(p => `
-                <tr class="hover:bg-slate-50 transition-colors">
-                    <td class="p-4 flex items-center space-x-3">
-                        <img src="${p.image}" class="w-12 h-12 object-cover rounded-lg" onerror="this.src='https://placehold.co/100x100'">
-                        <div>
-                            <span class="font-bold text-slate-900 block">${p.name}</span>
-                            <span class="text-xs text-slate-500">Supplier: <strong class="text-indigo-600">${p.supplier}</strong></span>
-                        </div>
-                    </td>
-                    <td class="p-4 text-slate-600">${p.category}</td>
-                    <td class="p-4 font-bold text-emerald-700">৳${p.supplierPrice} <span class="text-[10px] text-slate-400 block font-normal">Hidden from Retailer</span></td>
-                    <td class="p-4 font-bold text-indigo-700">৳${p.platformPrice} <span class="text-[10px] text-indigo-400 block font-normal">+৳50 Margin applied</span></td>
-                    <td class="p-4">
-                        <span class="px-2.5 py-1 rounded-full text-xs font-semibold ${p.status === 'Approved' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">${p.status}</span>
-                    </td>
-                    <td class="p-4 text-right space-x-2">
-                        ${p.status === 'Pending' ? `
-                            <button onclick="moderateProduct('${p.id}', 'Approved')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-xs font-semibold shadow-sm">Approve</button>
-                            <button onclick="moderateProduct('${p.id}', 'Rejected')" class="bg-rose-100 text-rose-700 hover:bg-rose-200 px-3 py-1.5 rounded-lg text-xs font-semibold">Reject</button>
-                        ` : `
-                            <button onclick="moderateProduct('${p.id}', 'Pending')" class="text-slate-400 hover:text-slate-600 text-xs font-medium">Revert to Pending</button>
-                        `}
-                    </td>
-                </tr>
-            `).join('');
+            if (!tbody) return;
+            tbody.innerHTML = products.map(p => {
+                const sup = suppliersList.find(s => s.id === p.supplierId);
+                return `
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="p-4 flex items-center space-x-3">
+                            <img src="${p.image}" class="w-12 h-12 object-cover rounded-lg" onerror="this.src='https://placehold.co/100x100'">
+                            <div>
+                                <span class="font-bold text-slate-900 block">${p.name}</span>
+                                <span class="text-xs text-slate-500">${sup ? sup.name : 'Unknown'}</span>
+                            </div>
+                        </td>
+                        <td class="p-4 font-mono font-bold text-indigo-700">${p.shopNo}</td>
+                        <td class="p-4 text-slate-600">
+                            <strong>${p.colour}</strong>
+                            <div class="text-[11px] text-slate-500">Total: ${p.stock} Pairs</div>
+                        </td>
+                        <td class="p-4 font-bold text-emerald-700">৳${p.supplierPrice}</td>
+                        <td class="p-4 font-bold text-indigo-700">৳${p.platformPrice}</td>
+                        <td class="p-4">
+                            <span class="px-2.5 py-1 rounded-full text-xs font-semibold ${p.status === 'Approved' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">${p.status}</span>
+                        </td>
+                        <td class="p-4 text-right space-x-2">
+                            ${p.status === 'Pending' ? `
+                                <button onclick="moderateProduct('${p.id}', 'Approved')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-xs font-semibold shadow-sm">Approve</button>
+                                <button onclick="moderateProduct('${p.id}', 'Rejected')" class="bg-rose-100 text-rose-700 hover:bg-rose-200 px-3 py-1.5 rounded-lg text-xs font-semibold">Reject</button>
+                            ` : `
+                                <button onclick="moderateProduct('${p.id}', 'Pending')" class="text-slate-400 hover:text-slate-600 text-xs font-medium">Revert</button>
+                            `}
+                        </td>
+                    </tr>
+                `;
+            }).join('');
         }
 
         function moderateProduct(id, status) {
             const p = products.find(item => item.id === id);
             if (p) {
                 p.status = status;
-                showToast(`Product status changed to ${status}`);
+                showToast(`Article status changed to ${status}`);
                 refreshViews();
             }
         }
 
-        function renderAdminVaultsAudit() {
-            const btnContainer = document.getElementById('admin-supplier-vault-audit-buttons');
-            btnContainer.innerHTML = suppliersList.map(s => `
-                <button onclick="selectAuditSupplier('${s.id}')" class="p-4 rounded-xl border text-left transition-all ${auditSelectedSupplierId === s.id ? 'border-indigo-600 bg-indigo-50/50 shadow-sm ring-2 ring-indigo-500/20' : 'border-slate-200 hover:border-slate-300 bg-white'}">
-                    <div class="flex items-center justify-between">
-                        <span class="font-bold text-slate-900 text-sm">${s.name}</span>
-                        <span class="bg-emerald-100 text-emerald-800 text-[10px] px-2 py-0.5 rounded-full font-semibold">ID: ${s.userId}</span>
+        function renderAdminInquiries() {
+            const list = document.getElementById('admin-inquiries-list');
+            if (!list) return;
+            
+            let htmlContent = '';
+            
+            if (inquiries.length > 0) {
+                htmlContent += `<div class="p-4 bg-slate-50 font-bold text-xs text-slate-700 uppercase tracking-wider">Product Inquiries ("Ask Admin")</div>`;
+                htmlContent += inquiries.map(i => `
+                    <div class="p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-100">
+                        <div>
+                            <div class="flex items-center space-x-2">
+                                <span class="font-bold text-slate-900">${i.id}</span>
+                                <span class="bg-indigo-100 text-indigo-800 text-[10px] px-2.5 py-0.5 rounded-full font-semibold">${i.status}</span>
+                                <span class="bg-amber-100 text-amber-800 text-[10px] px-2 py-0.5 rounded font-mono font-bold">Mapped Shop: ${i.shopNo}</span>
+                            </div>
+                            <h4 class="font-semibold text-slate-800 mt-1">${i.productName}</h4>
+                            <p class="text-xs text-slate-600 mt-1 bg-slate-50 p-3 rounded-lg border border-slate-200">"${i.message}"</p>
+                            <p class="text-[11px] text-slate-400 mt-1">Buyer: <strong>${i.buyer}</strong> • Date: ${i.date}</p>
+                        </div>
+                        <div>
+                            <button onclick="resolveInquiry('${i.id}')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-xs font-semibold shadow-sm">Mark Resolved / Reply</button>
+                        </div>
                     </div>
-                    <p class="text-xs text-slate-500 mt-1">${s.code} • ${s.location}</p>
-                    <p class="text-xs text-indigo-600 font-medium mt-2"><i class="fa-solid fa-photo-film mr-1"></i> ${(supplierMediaVaults[s.id] || []).length} Media Assets</p>
-                </button>
+                `).join('');
+            }
+
+            htmlContent += `<div class="p-4 bg-slate-50 font-bold text-xs text-slate-700 uppercase tracking-wider mt-2">Live Chat Messages Hub</div>`;
+            htmlContent += chatMessages.map(m => `
+                <div class="p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-slate-100 text-xs">
+                    <div>
+                        <span class="font-bold text-slate-900">${m.senderName}</span> <span class="text-slate-400 text-[10px]">to</span> <span class="font-semibold text-indigo-600">${m.recipient}</span>
+                        <p class="mt-1 text-slate-700 bg-slate-50 p-2.5 rounded-lg border border-slate-200">${m.text}</p>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-[10px] text-slate-400 block">${m.time}</span>
+                        <button onclick="openAdminBroadcastModal()" class="mt-1 bg-indigo-600 text-white px-3 py-1 rounded text-[11px] font-semibold hover:bg-indigo-700">Reply</button>
+                    </div>
+                </div>
             `).join('');
 
-            const displayArea = document.getElementById('admin-audit-display-area');
-            const targetSup = suppliersList.find(s => s.id === auditSelectedSupplierId);
-            const vault = supplierMediaVaults[auditSelectedSupplierId] || [];
-
-            if (!targetSup) return;
-
-            displayArea.innerHTML = `
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
-                    <div>
-                        <h4 class="font-bold text-slate-900">Audit Vault: ${targetSup.name} (User ID: ${targetSup.userId})</h4>
-                        <p class="text-xs text-slate-500">Trade License: ${targetSup.tradeLicense} • Showing strictly restricted individual supplier media</p>
-                    </div>
-                    <span class="bg-slate-900 text-white text-xs px-3 py-1.5 rounded-lg font-semibold"><i class="fa-solid fa-lock text-emerald-400 mr-1.5"></i> Admin Audit Mode</span>
-                </div>
-                ${vault.length === 0 ? `
-                    <div class="p-8 text-center text-slate-400 bg-slate-50 rounded-xl border border-slate-200">No media uploaded in this supplier's vault yet.</div>
-                ` : `
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                        ${vault.map(m => `
-                            <div class="bg-slate-50 rounded-xl border border-slate-200 overflow-hidden">
-                                <div class="h-40 bg-slate-200 relative overflow-hidden">
-                                    <img src="${m.url}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x400'">
-                                    <span class="absolute top-2 left-2 bg-slate-900/80 text-white text-[10px] px-2 py-0.5 rounded uppercase font-semibold">${m.type}</span>
-                                </div>
-                                <div class="p-3">
-                                    <h5 class="font-bold text-slate-900 text-xs">${m.title}</h5>
-                                    <p class="text-[11px] text-slate-400 mt-0.5">Date: ${m.date}</p>
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                `}
-            `;
+            list.innerHTML = htmlContent;
         }
 
-        function selectAuditSupplier(supId) {
-            auditSelectedSupplierId = supId;
-            renderAdminVaultsAudit();
+        function resolveInquiry(id) {
+            const inq = inquiries.find(i => i.id === id);
+            if (inq) {
+                inq.status = 'Resolved by Admin';
+                showToast('Inquiry marked as resolved.');
+                refreshViews();
+            }
         }
 
         function renderAdminOrders() {
             const list = document.getElementById('admin-orders-list');
+            if (!list) return;
             list.innerHTML = orders.map(o => `
                 <div class="p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div>
                         <div class="flex items-center space-x-2">
                             <span class="font-bold text-slate-900">${o.id}</span>
                             <span class="bg-indigo-100 text-indigo-800 text-[10px] px-2.5 py-0.5 rounded-full font-semibold">${o.status}</span>
+                            <span class="bg-indigo-50 text-indigo-700 text-[10px] px-2 py-0.5 rounded font-mono font-bold">Linked Shop: ${o.shopNo}</span>
                         </div>
-                        <h4 class="font-semibold text-slate-800 mt-1">${o.productName} (${o.qty} units)</h4>
-                        <p class="text-xs text-slate-500 mt-0.5">Retailer: <span class="text-slate-700 font-medium">${o.retailer}</span> • Supplier: <span class="text-indigo-600 font-medium">${o.supplier}</span></p>
+                        <h4 class="font-semibold text-slate-800 mt-1">${o.productName} (${o.qty} pairs)</h4>
+                        <p class="text-xs text-slate-500 mt-0.5">Buyer: <span class="text-slate-700 font-medium">${o.retailer}</span> • Supplier Shop: <strong class="text-indigo-600">${o.shopNo}</strong></p>
                     </div>
                     <div class="flex items-center space-x-4">
                         <div class="text-right">
-                            <span class="text-xs text-slate-400 block">Total Value (Platform)</span>
+                            <span class="text-xs text-slate-400 block">Total Value</span>
                             <span class="font-bold text-slate-900">৳${o.total}</span>
                         </div>
                         <select onchange="updateAdminOrderStatus('${o.id}', this.value)" class="bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 text-xs font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
@@ -1475,6 +1887,8 @@
             document.getElementById('admin-completed-count').innerText = completedCount;
 
             const breakdown = document.getElementById('admin-ledger-breakdown');
+            if (!breakdown) return;
+
             breakdown.innerHTML = orders.map(o => {
                 const itemMargin = o.qty * 50;
                 const supPayout = o.total - itemMargin;
@@ -1482,10 +1896,11 @@
                     <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 text-sm">
                         <div>
                             <span class="font-bold text-slate-900">${o.id}</span>
-                            <span class="text-xs text-slate-500 ml-2">(${o.productName} x ${o.qty})</span>
+                            <span class="text-xs text-slate-500 ml-2">(${o.productName} x ${o.qty} pairs)</span>
+                            <span class="text-[10px] bg-indigo-100 text-indigo-800 px-1.5 py-0.5 rounded ml-2 font-mono">Shop: ${o.shopNo}</span>
                         </div>
-                        <div class="flex items-center space-x-6 text-xs">
-                            <div><span class="text-slate-400 block">Retailer Paid:</span> <strong class="text-slate-800">৳${o.total}</strong></div>
+                        <div class="flex items-center space-x-6 text-xs flex-wrap">
+                            <div><span class="text-slate-400 block">Buyer Paid:</span> <strong class="text-slate-800">৳${o.total}</strong></div>
                             <div><span class="text-slate-400 block">Supplier Payout:</span> <strong class="text-emerald-700">৳${supPayout}</strong></div>
                             <div><span class="text-slate-400 block">Platform Margin:</span> <strong class="text-indigo-600 font-bold">+৳${itemMargin}</strong></div>
                         </div>
@@ -1494,9 +1909,12 @@
             }).join('');
         }
 
-        // Initialize on load
         window.onload = function() {
             setRole('retailer');
+            renderCarousel();
+            startCarouselTimer();
+            applyLanguage();
+            updateUnreadBadges();
         };
     </script>
 </body>
